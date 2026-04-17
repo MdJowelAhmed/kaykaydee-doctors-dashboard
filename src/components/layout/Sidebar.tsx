@@ -49,10 +49,11 @@ const navItems: NavItem[] = [
     icon: CalendarCheck,
     allowedRoles: [UserRole.DOCTOR, UserRole.STAFF],
   },
+
   {
-    title: 'Availability',
-    href: '/availability',
-    icon: CalendarOff,
+    title: 'Calendar',
+    href: '/calender',
+    icon: Calendar,
     allowedRoles: [UserRole.DOCTOR, UserRole.STAFF],
   },
   {
@@ -65,6 +66,12 @@ const navItems: NavItem[] = [
     title: 'Schedule',
     href: '/schedule',
     icon: CalendarRange,
+    allowedRoles: [UserRole.DOCTOR, UserRole.STAFF],
+  },
+  {
+    title: 'Availability',
+    href: '/availability',
+    icon: CalendarOff,
     allowedRoles: [UserRole.DOCTOR, UserRole.STAFF],
   },
   // {
@@ -88,12 +95,7 @@ const navItems: NavItem[] = [
   //   allowedRoles: [UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.BUSINESS],
   // },
 
-  {
-    title: 'Calendar',
-    href: '/calender',
-    icon: Calendar,
-    allowedRoles: [UserRole.DOCTOR, UserRole.STAFF],
-  },
+
   // {
   //   title: 'Transactions History',
   //   href: '/transactions-history',
@@ -133,7 +135,7 @@ const navItems: NavItem[] = [
   //   allowedRoles: [UserRole.DOCTOR],
   // },
   {
-    title: 'Zealth AI',
+    title: 'AI Manager',
     href: '/zealth-ai',
     icon: Sparkles,
     allowedRoles: [UserRole.DOCTOR, UserRole.STAFF],

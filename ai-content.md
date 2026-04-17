@@ -22,7 +22,7 @@
 │                          App.tsx                                 │
 │  Routes: /auth/* | / (Protected) | * (404)                        │
 │  Layouts: AuthLayout | DashboardLayout (ProtectedRoute)           │
-│  Access model: super-admin + admin (`UserRole.ADMIN`) only         │
+│  Access model: doctor + staff only                                │
 └─────────────────────────────────────────────────────────────────┘
                                     │
         ┌───────────────────────────┼───────────────────────────┐
@@ -40,7 +40,7 @@
 - **API:** RTK Query (`baseApi` + `injectEndpoints`) → auto caching, invalidation
 - **Local State:** Redux slices (createSlice) → `useAppDispatch`, `useAppSelector`
 - **Auth:** `authSlice` + localStorage (token, user) → `loadUserFromStorage` on mount
-- **Access model:** dashboard shell for `super-admin` and `admin`; legacy API value `host` is normalized to `admin` in `authSlice`. `business` is rejected at login and by `DashboardAccessGuard`.
+- **Access model:** dashboard shell for `doctor` and `staff`; legacy stored/API values `super-admin` → `doctor`, `admin/host` → `staff`. Any other roles are rejected at login and by `DashboardAccessGuard`.
 
 ## 2. Folder Structure
 
@@ -137,9 +137,9 @@ src/
 
 ### Role Rules (auth enum)
 
-- **super-admin:** Full dashboard; super-admin-only nav items (users, clinics, subscriptions admin, FAQ, etc.)
-- **admin (`UserRole.ADMIN`, string `admin`):** Shared dashboard areas with super-admin where `allowedRoles` includes both; no separate “host” product role in code
-- **business:** Not permitted on this dashboard (blocked at login / guard). Legacy `host` from API/storage maps to `admin` via `normalizeAuthRole`
+- **doctor:** Full dashboard; doctor-only nav items (users, clinics, subscriptions admin, FAQ, etc.)
+- **staff:** Shared dashboard areas with doctor where `allowedRoles` includes both
+- **other roles:** Not permitted on this dashboard (blocked at login / guard)
 
 ### Modal Rules
 

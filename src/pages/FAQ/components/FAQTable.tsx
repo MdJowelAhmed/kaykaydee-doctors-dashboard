@@ -1,18 +1,12 @@
 import { motion } from 'framer-motion'
-import { Button } from '@/components/ui/button'
-import { Edit, Trash2 } from 'lucide-react'
 import type { FAQ } from '@/types'
 
 interface FAQTableProps {
   faqs: FAQ[]
-  onEdit: (faq: FAQ) => void
-  onDelete: (faq: FAQ) => void
 }
 
 export function FAQTable({
   faqs,
-  onEdit,
-  onDelete,
 }: FAQTableProps) {
   return (
     <div className="w-full overflow-auto">
@@ -23,14 +17,13 @@ export function FAQTable({
             <th className="px-6 py-4 text-left text-sm font-bold">Answer</th>
             {/* <th className="px-6 py-4 text-left text-sm font-bold">Created At</th>
             <th className="px-6 py-4 text-left text-sm font-bold">Updated At</th> */}
-            <th className="px-6 py-4 text-right text-sm font-bold">Action</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-100">
           {faqs.length === 0 ? (
             <tr>
               <td
-                colSpan={3}
+                colSpan={2}
                 className="px-6 py-8 text-center text-gray-500"
               >
                 No FAQs found
@@ -73,35 +66,6 @@ export function FAQTable({
                   </span>
                 </td> */}
 
-                {/* Actions Column */}
-                <td className="px-6 py-4">
-                  <div className="flex justify-end gap-2">
-                    {/* <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => onView(faq)}
-                      className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 border-blue-200"
-                    >
-                      <Eye className="h-4 w-4" />
-                    </Button> */}
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => onEdit(faq)}
-                      className="text-green-600 hover:text-green-700 hover:bg-green-50 border-green-200"
-                    >
-                      <Edit className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => onDelete(faq)}
-                      className="text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </td>
               </motion.tr>
             ))
           )}

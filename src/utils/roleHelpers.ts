@@ -24,14 +24,11 @@ export const filterDataByRole = <T extends Record<string, unknown>>(
   userBusinessId?: string,
   businessIdField: string = 'businessId'
 ): T[] => {
+  void userBusinessId
+  void businessIdField
   if (canAccessDashboard(userRole)) {
     return data
   }
-
-  if (userRole === UserRole.BUSINESS && userBusinessId) {
-    return data.filter((item) => item[businessIdField] === userBusinessId)
-  }
-
   return []
 }
 
@@ -41,25 +38,21 @@ export const canAccessItem = (
   userBusinessId?: string,
   businessIdField: string = 'businessId'
 ): boolean => {
+  void item
+  void userBusinessId
+  void businessIdField
   if (canAccessDashboard(userRole)) {
     return true
   }
-
-  if (userRole === UserRole.BUSINESS && userBusinessId) {
-    return item[businessIdField] === userBusinessId
-  }
-
   return false
 }
 
 export const getRoleBadgeColor = (role: string): string => {
   switch (normalizeRoleKey(role)) {
-    case UserRole.SUPER_ADMIN:
+    case UserRole.DOCTOR:
       return 'bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-100'
-    case UserRole.ADMIN:
+    case UserRole.STAFF:
       return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200'
-    case UserRole.BUSINESS:
-      return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
     default:
       return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200'
   }
@@ -67,12 +60,10 @@ export const getRoleBadgeColor = (role: string): string => {
 
 export const getRoleDisplayName = (role: string): string => {
   switch (normalizeRoleKey(role)) {
-    case UserRole.SUPER_ADMIN:
-      return 'Super Admin'
-    case UserRole.ADMIN:
-      return 'Admin'
-    case UserRole.BUSINESS:
-      return 'Business'
+    case UserRole.DOCTOR:
+      return 'Doctor'
+    case UserRole.STAFF:
+      return 'Staff'
     default:
       return 'Unknown'
   }

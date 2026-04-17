@@ -1,19 +1,7 @@
 import { useMemo, useState } from 'react'
-import { Info, Pencil, Plus } from 'lucide-react'
+import { Info } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { SearchInput } from '@/components/common/SearchInput'
-import { Button } from '@/components/ui/button'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
 import {
   Select,
   SelectContent,
@@ -22,20 +10,6 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
-import { toast } from '@/utils/toast'
-import { useAppSelector } from '@/redux/hooks'
-import { UserRole } from '@/types/roles'
-import { cn } from '@/utils/cn'
-
-/** Default copy used as textarea placeholder on create and as fallback if body is left empty */
-const ABOUT_FORM_DEFAULTS = {
-  titlePlaceholder: 'e.g. Our Mission, Our Values',
-  bodyPlaceholder:
-    'Shpitze is an on-demand professional platform for the dental industry, offering a one-stop solution for temporary and flexible staffing. We aim to bring dental practices and qualified dental professionals together in a streamlined and efficient manner.',
-} as const
-
-/** Example section titles — surfaced in title field placeholder on create */
-const SAMPLE_SECTION_TITLE_HINTS = ['Our Story', 'Our Vision', 'Our Goal'] as const
 
 type DateFilter = 'all' | '7d' | '30d' | '90d'
 
@@ -85,28 +59,9 @@ function matchesDateFilter(updatedAt: number, filter: DateFilter) {
 }
 
 export default function AboutUsSettings() {
-  const { user } = useAppSelector((state) => state.auth)
-  const canManage = user?.role === UserRole.SUPER_ADMIN
-
-  const [sections, setSections] = useState<AboutSection[]>(initialSections)
+  const [sections] = useState<AboutSection[]>(initialSections)
   const [search, setSearch] = useState('')
   const [dateFilter, setDateFilter] = useState<DateFilter>('all')
-
-  type ModalMode = 'create' | 'edit'
-  const [modalOpen, setModalOpen] = useState(false)
-  const [modalMode, setModalMode] = useState<ModalMode>('create')
-  const [editingId, setEditingId] = useState<string | null>(null)
-
-  const [formTitle, setFormTitle] = useState('')
-  const [formBody, setFormBody] = useState('')
-  const [saving, setSaving] = useState(false)
-
-  const titleFieldPlaceholder =
-    modalMode === 'create'
-      ? `${ABOUT_FORM_DEFAULTS.titlePlaceholder} (${SAMPLE_SECTION_TITLE_HINTS.join(', ')})`
-      : undefined
-  const bodyFieldPlaceholder =
-    modalMode === 'create' ? ABOUT_FORM_DEFAULTS.bodyPlaceholder : undefined
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase()
@@ -118,87 +73,6 @@ export default function AboutUsSettings() {
       )
     })
   }, [sections, search, dateFilter])
-
-  const closeModal = () => {
-    setModalOpen(false)
-    setModalMode('create')
-    setEditingId(null)
-    setFormTitle('')
-    setFormBody('')
-  }
-
-  const openAdd = () => {
-    setModalMode('create')
-    setEditingId(null)
-    setFormTitle('')
-    setFormBody('')
-    setModalOpen(true)
-  }
-
-  const openEdit = (section: AboutSection) => {
-    setModalMode('edit')
-    setEditingId(section.id)
-    setFormTitle(section.title)
-    setFormBody(section.body)
-    setModalOpen(true)
-  }
-
-  const handleModalSave = async () => {
-    const title = formTitle.trim()
-    if (!title) {
-      toast({
-        title: 'Title required',
-        description: 'Please enter a section title.',
-        variant: 'destructive',
-      })
-      return
-    }
-    const bodyTrimmed = formBody.trim()
-    const bodyToStore =
-      bodyTrimmed ||
-      (modalMode === 'create' ? ABOUT_FORM_DEFAULTS.bodyPlaceholder : '')
-
-    if (modalMode === 'edit' && !bodyTrimmed) {
-      toast({
-        title: 'Content required',
-        description: 'Please enter section content.',
-        variant: 'destructive',
-      })
-      return
-    }
-
-    setSaving(true)
-    await new Promise((r) => setTimeout(r, 400))
-
-    if (modalMode === 'create') {
-      const next: AboutSection = {
-        id: crypto.randomUUID(),
-        title,
-        body: bodyToStore,
-        updatedAt: Date.now(),
-      }
-      setSections((prev) => [...prev, next])
-      toast({
-        title: 'Template added',
-        description: `"${title}" has been added.`,
-      })
-    } else if (editingId) {
-      setSections((prev) =>
-        prev.map((s) =>
-          s.id === editingId
-            ? { ...s, title, body: bodyTrimmed, updatedAt: Date.now() }
-            : s
-        )
-      )
-      toast({
-        title: 'Section updated',
-        description: `"${title}" has been saved.`,
-      })
-    }
-
-    setSaving(false)
-    closeModal()
-  }
 
   return (
     <motion.div
@@ -230,16 +104,6 @@ export default function AboutUsSettings() {
               <SelectItem value="90d">Last 90 days</SelectItem>
             </SelectContent>
           </Select>
-          {canManage && (
-            <Button
-              type="button"
-              onClick={openAdd}
-              className="rounded-md  px-4 font-medium text-white "
-            >
-              <Plus className="mr-2 h-4 w-4" />
-              Add Template
-            </Button>
-          )}
         </div>
 
         <div className="space-y-4">
@@ -287,80 +151,12 @@ export default function AboutUsSettings() {
                       </p>
                     </TooltipContent>
                   </Tooltip>
-                  {canManage && (
-                    <button
-                      type="button"
-                      onClick={() => openEdit(section)}
-                      className={cn(
-                        'flex h-9 w-9 items-center justify-center rounded-full text-[#6B7280] transition-colors hover:bg-[#F3F4F6] hover:text-[#374151]'
-                      )}
-                      aria-label={`Edit ${section.title}`}
-                    >
-                      <Pencil className="h-5 w-5" strokeWidth={1.75} />
-                    </button>
-                  )}
                 </div>
               </article>
             ))
           )}
         </div>
       </div>
-
-      <Dialog
-        open={modalOpen}
-        onOpenChange={(open) => {
-          if (!open) closeModal()
-        }}
-      >
-        <DialogContent className="max-w-2xl border-[#E5E7EB] bg-white">
-          <DialogHeader>
-            <DialogTitle>
-              {modalMode === 'create' ? 'Add template' : 'Edit section'}
-            </DialogTitle>
-            <DialogDescription>
-              {modalMode === 'create'
-                ? 'Create a new About Us block. Fields start empty; hints come from your default templates.'
-                : 'Update the title and content for this About Us block.'}
-            </DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4 py-2">
-            <div className="grid gap-2">
-              <Label htmlFor="about-modal-title">Title</Label>
-              <Input
-                id="about-modal-title"
-                value={formTitle}
-                onChange={(e) => setFormTitle(e.target.value)}
-                placeholder={titleFieldPlaceholder}
-                className="rounded-lg border-[#E5E7EB]"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="about-modal-body">Content</Label>
-              <Textarea
-                id="about-modal-body"
-                value={formBody}
-                onChange={(e) => setFormBody(e.target.value)}
-                placeholder={bodyFieldPlaceholder}
-                rows={6}
-                className="resize-y rounded-lg border-[#E5E7EB] text-sm"
-              />
-            </div>
-          </div>
-          <DialogFooter>
-            <Button type="button" variant="outline" onClick={closeModal}>
-              Cancel
-            </Button>
-            <Button
-              type="button"
-              onClick={handleModalSave}
-              isLoading={saving}
-              className="bg-[#1E293B] text-white hover:bg-[#334155]"
-            >
-              {modalMode === 'create' ? 'Save' : 'Save changes'}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </motion.div>
   )
 }

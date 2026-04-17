@@ -1,22 +1,28 @@
-// Auth roles — exactly three (dashboard: super-admin + admin only)
+// Auth roles — dashboard access is for doctor + staff only
 export enum UserRole {
-  SUPER_ADMIN = 'super-admin',
-  ADMIN = 'admin',
-  BUSINESS = 'business',
+  DOCTOR = 'doctor',
+  STAFF = 'staff',
 }
 
-/** Legacy API/storage value; normalized to `UserRole.ADMIN` in `normalizeAuthRole`. */
+/** Legacy API/storage values (older dashboards). */
 export const LEGACY_ADMIN_ROLE_KEY = 'host' as const
+export const LEGACY_SUPER_ADMIN_ROLE_KEY = 'super-admin' as const
+export const LEGACY_ADMIN_ROLE_KEY_2 = 'admin' as const
 
-/** Super Admin + Admin (non–super-admin operators). */
 export const DASHBOARD_ALLOWED_ROLES: readonly UserRole[] = [
-  UserRole.SUPER_ADMIN,
-  UserRole.ADMIN,
+  UserRole.DOCTOR,
+  UserRole.STAFF,
 ]
 
-/** Map legacy `host` to admin for permission checks and persisted sessions. */
+/** Map legacy roles to current keys for permission checks and persisted sessions. */
 export function normalizeRoleKey(role: string): string {
-  if (role === LEGACY_ADMIN_ROLE_KEY) return UserRole.ADMIN
+  if (role === UserRole.DOCTOR) return UserRole.DOCTOR
+  if (role === UserRole.STAFF) return UserRole.STAFF
+
+  if (role === LEGACY_SUPER_ADMIN_ROLE_KEY) return UserRole.DOCTOR
+  if (role === LEGACY_ADMIN_ROLE_KEY_2) return UserRole.STAFF
+  if (role === LEGACY_ADMIN_ROLE_KEY) return UserRole.STAFF
+
   return role
 }
 
@@ -25,7 +31,7 @@ export function canAccessDashboard(role: string): boolean {
   return DASHBOARD_ALLOWED_ROLES.includes(key as UserRole)
 }
 
-const ALL_DASHBOARD_ROLES = [UserRole.SUPER_ADMIN, UserRole.ADMIN]
+
 
 export interface RoutePermission {
   path: string
@@ -35,42 +41,40 @@ export interface RoutePermission {
 
 /** Route → allowed roles (extend as you add routes) */
 export const ROUTE_PERMISSIONS: Record<string, UserRole[]> = {
-  '/dashboard': ALL_DASHBOARD_ROLES,
-  '/users': [UserRole.SUPER_ADMIN],
-  '/clinic-management': [UserRole.SUPER_ADMIN],
-  '/controller': [UserRole.SUPER_ADMIN],
-  '/subscription-packages': [UserRole.SUPER_ADMIN],
-  '/subscription-invoice': [UserRole.SUPER_ADMIN],
-  '/subscription-manage': [UserRole.SUPER_ADMIN],
-  '/admin-manage': [UserRole.SUPER_ADMIN],
-  '/agency-management': [UserRole.SUPER_ADMIN],
-  '/transactions-history': [UserRole.SUPER_ADMIN],
-  '/settings/faq': [UserRole.SUPER_ADMIN],
-  '/settings/terms': ALL_DASHBOARD_ROLES,
-  '/settings/privacy': ALL_DASHBOARD_ROLES,
-  '/settings/about-us': ALL_DASHBOARD_ROLES,
-  '/cars': ALL_DASHBOARD_ROLES,
-  '/booking-management': ALL_DASHBOARD_ROLES,
-  '/my-listing': ALL_DASHBOARD_ROLES,
-  '/calender': ALL_DASHBOARD_ROLES,
-  '/clients': ALL_DASHBOARD_ROLES,
-  '/reviews-ratings': ALL_DASHBOARD_ROLES,
-  '/app-slider': ALL_DASHBOARD_ROLES,
-  '/subscription': ALL_DASHBOARD_ROLES,
-  '/notification': ALL_DASHBOARD_ROLES,
-  '/support': ALL_DASHBOARD_ROLES,
-  '/zealth-ai': ALL_DASHBOARD_ROLES,
-  '/my-appointments': ALL_DASHBOARD_ROLES,
-  '/availability': ALL_DASHBOARD_ROLES,
-  '/my-patients-list': ALL_DASHBOARD_ROLES,
-  '/schedule': ALL_DASHBOARD_ROLES,
-  '/settings/profile': ALL_DASHBOARD_ROLES,
-  '/settings/password': ALL_DASHBOARD_ROLES,
-  '/categories': ALL_DASHBOARD_ROLES,
+  // '/dashboard': ALL_DASHBOARD_ROLES,
+  // Former "super-admin only" areas now treated as Doctor-only
+  // '/users': [UserRole.DOCTOR],
+  // '/clinic-management': [UserRole.DOCTOR],
+  // '/controller': [UserRole.DOCTOR],
+  // '/subscription-packages': [UserRole.DOCTOR],
+  // '/subscription-invoice': [UserRole.DOCTOR],
+  // '/subscription-manage': [UserRole.DOCTOR],
+  // '/admin-manage': [UserRole.DOCTOR],
+  // '/agency-management': [UserRole.DOCTOR],
+  // '/transactions-history': [UserRole.DOCTOR],
+  // '/settings/faq': [UserRole.DOCTOR],
+  // '/settings/terms': ALL_DASHBOARD_ROLES,
+  // '/settings/privacy': ALL_DASHBOARD_ROLES,
+  // '/settings/about-us': ALL_DASHBOARD_ROLES,
+  // '/cars': ALL_DASHBOARD_ROLES,
+  // '/booking-management': ALL_DASHBOARD_ROLES,
+  // '/my-listing': ALL_DASHBOARD_ROLES,
+  
+  '/my-appointments': [UserRole.DOCTOR,UserRole.STAFF],
+  '/calender': [UserRole.DOCTOR, ],
+  '/notification': [UserRole.DOCTOR,UserRole.STAFF],
+  '/support': [UserRole.DOCTOR,UserRole.STAFF],
+  '/zealth-ai': [UserRole.DOCTOR,UserRole.STAFF],
+  '/availability': [UserRole.DOCTOR,UserRole.STAFF],
+  '/my-patients-list': [UserRole.DOCTOR,UserRole.STAFF],
+  '/schedule': [UserRole.DOCTOR,UserRole.STAFF],
+  '/settings/profile': [UserRole.DOCTOR,UserRole.STAFF],
+  '/settings/password': [UserRole.DOCTOR,UserRole.STAFF],
+ 
 }
 
 export const getDefaultRouteForRole = (role: string): string => {
-  if (canAccessDashboard(role)) return '/dashboard'
+  if (canAccessDashboard(role)) return '/my-appointments'
   return '/auth/login'
 }
 
@@ -91,11 +95,8 @@ export const hasRouteAccess = (userRole: string, routePath: string): boolean => 
   return false
 }
 
-/** Business may see scoped data on these areas */
 export const shouldFilterData = (userRole: string, routePath: string): boolean => {
-  const sharedRoutes = ['/cars', '/booking-management', '/calender']
-  return (
-    userRole === UserRole.BUSINESS &&
-    sharedRoutes.some((route) => routePath.startsWith(route))
-  )
+  void userRole
+  void routePath
+  return false
 }

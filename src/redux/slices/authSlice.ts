@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-export type AuthUserRole = 'super-admin' | 'admin' | 'business'
+export type AuthUserRole = 'doctor' | 'staff' | 'unknown'
 
 interface User {
   id: string
@@ -15,12 +15,16 @@ interface User {
 
 /** Maps legacy stored roles and API values to current AuthUserRole */
 export function normalizeAuthRole(role: string): AuthUserRole {
-  if (role === 'super-admin') return 'super-admin'
-  if (role === 'admin') return 'admin'
-  if (role === 'business') return 'business'
-  if (role === 'host') return 'admin'
-  if (role === 'employee') return 'business'
-  return 'business'
+  if (role === 'doctor') return 'doctor'
+  if (role === 'staff') return 'staff'
+
+  // Legacy/older dashboard roles → current equivalents
+  if (role === 'super-admin') return 'doctor'
+  if (role === 'admin') return 'staff'
+  if (role === 'host') return 'staff'
+
+  // Explicitly block other roles on this dashboard
+  return 'unknown'
 }
 
 interface AuthState {

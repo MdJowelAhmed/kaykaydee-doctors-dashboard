@@ -1,28 +1,15 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Plus } from 'lucide-react'
 import { SearchInput } from '@/components/common/SearchInput'
 import { Pagination } from '@/components/common/Pagination'
 import { FAQTable } from './components/FAQTable'
-import { AddEditFAQModal } from './components/AddEditFAQModal'
-// import { ViewFAQModal } from './components/ViewFAQModal'
-import { DeleteFAQModal } from './components/DeleteFAQModal'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { setFilters, setPage, setLimit, deleteFAQ } from '@/redux/slices/faqSlice'
+import { setFilters, setPage, setLimit } from '@/redux/slices/faqSlice'
 import { useUrlString, useUrlNumber } from '@/hooks/useUrlState'
-import { toast } from '@/utils/toast'
-import type { FAQ } from '@/types'
 
 const FAQ = () => {
   const dispatch = useAppDispatch()
-
-  // Modal state
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  // const [isViewModalOpen, setIsViewModalOpen] = useState(false)
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
-  const [selectedFAQ, setSelectedFAQ] = useState<FAQ | null>(null)
 
   // URL state management
   const [searchQuery, setSearchQuery] = useUrlString('search', '')
@@ -57,43 +44,6 @@ const FAQ = () => {
     return filteredList.slice(startIndex, startIndex + pagination.limit)
   }, [filteredList, pagination.page, pagination.limit])
 
-  // Handlers
-  // const handleView = (faq: FAQ) => {
-  //   setSelectedFAQ(faq)
-  //   setIsViewModalOpen(true)
-  // }
-
-  const handleEdit = (faq: FAQ) => {
-    setSelectedFAQ(faq)
-    setIsModalOpen(true)
-  }
-
-  const handleDelete = (faq: FAQ) => {
-    setSelectedFAQ(faq)
-    setIsDeleteModalOpen(true)
-  }
-
-  const handleConfirmDelete = () => {
-    if (selectedFAQ) {
-      dispatch(deleteFAQ(selectedFAQ.id))
-      toast({
-        title: 'FAQ Deleted',
-        description: 'FAQ has been deleted successfully.',
-      })
-      setSelectedFAQ(null)
-    }
-  }
-
-  const handleAddNew = () => {
-    setSelectedFAQ(null)
-    setIsModalOpen(true)
-  }
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false)
-    setSelectedFAQ(null)
-  }
-
   const handlePageChange = (page: number) => {
     setCurrentPage(page)
   }
@@ -120,21 +70,6 @@ const FAQ = () => {
               placeholder="Search questions & answers"
               className="w-[300px]"
             />
-
-            {/* Filter Dropdown */}
-            {/* <FAQFilterDropdown
-              value={positionFilter as FAQPosition | 'all'}
-              onChange={setPositionFilter}
-            /> */}
-
-            {/* Add New FAQ Button */}
-            <Button
-              onClick={handleAddNew}
-              className="bg-primary-foreground hover:bg-blue-700 text-white"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Add New FAQ
-            </Button>
           </div>
         </CardHeader>
 
@@ -142,8 +77,6 @@ const FAQ = () => {
           {/* Table */}
           <FAQTable
             faqs={paginatedData}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
           />
 
           {/* Pagination */}
@@ -159,34 +92,6 @@ const FAQ = () => {
           </div>
         </CardContent>
       </Card>
-
-      {/* Add/Edit FAQ Modal */}
-      <AddEditFAQModal
-        open={isModalOpen}
-        onClose={handleCloseModal}
-        faq={selectedFAQ}
-      />
-
-      {/* View FAQ Modal - Commented out as View button is hidden */}
-      {/* <ViewFAQModal
-        open={isViewModalOpen}
-        onClose={() => {
-          setIsViewModalOpen(false)
-          setSelectedFAQ(null)
-        }}
-        faq={selectedFAQ}
-      /> */}
-
-      {/* Delete FAQ Modal */}
-      <DeleteFAQModal
-        open={isDeleteModalOpen}
-        onClose={() => {
-          setIsDeleteModalOpen(false)
-          setSelectedFAQ(null)
-        }}
-        faq={selectedFAQ}
-        onConfirm={handleConfirmDelete}
-      />
     </motion.div>
   )
 }

@@ -1,20 +1,14 @@
 import React, { useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import {
-  LayoutDashboard,
   Settings,
   User,
   Lock,
   FileText,
   Shield,
   Info,
-  Receipt,
-  Layers,
-  UserCog,
   Sparkles,
   LogOut,
-  Users,
-  Building2,
   HelpCircle,
   CalendarCheck,
   CalendarOff,
@@ -43,48 +37,48 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  {
-    title: 'Dashboard',
-    href: '/dashboard',
-    icon: LayoutDashboard,
-    allowedRoles: [UserRole.SUPER_ADMIN, UserRole.ADMIN],
-  },
+  // {
+  //   title: 'Dashboard',
+  //   href: '/dashboard',
+  //   icon: LayoutDashboard,
+  //   allowedRoles: [UserRole.DOCTOR, UserRole.STAFF],
+  // },
   {
     title: 'My Appointments',
     href: '/my-appointments',
     icon: CalendarCheck,
-    allowedRoles: [UserRole.SUPER_ADMIN, UserRole.ADMIN],
+    allowedRoles: [UserRole.DOCTOR, UserRole.STAFF],
   },
   {
     title: 'Availability',
     href: '/availability',
     icon: CalendarOff,
-    allowedRoles: [UserRole.SUPER_ADMIN, UserRole.ADMIN],
+    allowedRoles: [UserRole.DOCTOR, UserRole.STAFF],
   },
   {
     title: 'My Patients List',
     href: '/my-patients-list',
     icon: UserRound,
-    allowedRoles: [UserRole.SUPER_ADMIN, UserRole.ADMIN],
+    allowedRoles: [UserRole.DOCTOR, UserRole.STAFF],
   },
   {
     title: 'Schedule',
     href: '/schedule',
     icon: CalendarRange,
-    allowedRoles: [UserRole.SUPER_ADMIN, UserRole.ADMIN],
+    allowedRoles: [UserRole.DOCTOR, UserRole.STAFF],
   },
-  {
-    title: 'User Management',
-    href: '/users',
-    icon: Users,
-    allowedRoles: [UserRole.SUPER_ADMIN],
-  },
-  {
-    title: 'Clinic Management',
-    href: '/clinic-management',
-    icon: Building2,
-    allowedRoles: [UserRole.SUPER_ADMIN],
-  },
+  // {
+  //   title: 'User Management',
+  //   href: '/users',
+  //   icon: Users,
+  //   allowedRoles: [UserRole.DOCTOR],
+  // },
+  // {
+  //   title: 'Clinic Management',
+  //   href: '/clinic-management',
+  //   icon: Building2,
+  //   allowedRoles: [UserRole.DOCTOR],
+  // },
 
   
   // {
@@ -98,7 +92,7 @@ const navItems: NavItem[] = [
     title: 'Calendar',
     href: '/calender',
     icon: Calendar,
-    allowedRoles: [UserRole.SUPER_ADMIN, ],
+    allowedRoles: [UserRole.DOCTOR, UserRole.STAFF],
   },
   // {
   //   title: 'Transactions History',
@@ -120,29 +114,29 @@ const navItems: NavItem[] = [
   //   icon: Package,
   //   allowedRoles: [UserRole.SUPER_ADMIN],
   // },
-  {
-    title: 'Subscription Invoice',
-    href: '/subscription-invoice',
-    icon: Receipt,
-    allowedRoles: [UserRole.SUPER_ADMIN],
-  },
-  {
-    title: 'Subscription Manage',
-    href: '/subscription-manage',
-    icon: Layers,
-    allowedRoles: [UserRole.SUPER_ADMIN],
-  },
-  {
-    title: 'Admin Manage',
-    href: '/admin-manage',
-    icon: UserCog,
-    allowedRoles: [UserRole.SUPER_ADMIN],
-  },
+  // {
+  //   title: 'Subscription Invoice',
+  //   href: '/subscription-invoice',
+  //   icon: Receipt,
+  //   allowedRoles: [UserRole.DOCTOR],
+  // },
+  // {
+  //   title: 'Subscription Manage',
+  //   href: '/subscription-manage',
+  //   icon: Layers,
+  //   allowedRoles: [UserRole.DOCTOR],
+  // },
+  // {
+  //   title: 'Admin Manage',
+  //   href: '/admin-manage',
+  //   icon: UserCog,
+  //   allowedRoles: [UserRole.DOCTOR],
+  // },
   {
     title: 'Zealth AI',
     href: '/zealth-ai',
     icon: Sparkles,
-    allowedRoles: [UserRole.SUPER_ADMIN, UserRole.ADMIN],
+    allowedRoles: [UserRole.DOCTOR, UserRole.STAFF],
   },
   // {
   //   title: 'Subscription',
@@ -164,37 +158,37 @@ const settingsItems: NavItem[] = [
     title: 'Profile',
     href: '/settings/profile',
     icon: User,
-    allowedRoles: [UserRole.SUPER_ADMIN, UserRole.ADMIN],
+    allowedRoles: [UserRole.DOCTOR, UserRole.STAFF],
   },
   {
     title: 'About Us',
     href: '/settings/about-us',
     icon: Info,
-    allowedRoles: [UserRole.SUPER_ADMIN, UserRole.ADMIN],
+    allowedRoles: [UserRole.DOCTOR, UserRole.STAFF],
   },
   {
     title: 'FAQ',
     href: '/settings/faq',
     icon: HelpCircle,
-    allowedRoles: [UserRole.SUPER_ADMIN],
+    allowedRoles: [UserRole.DOCTOR],
   },
   {
     title: 'Password',
     href: '/settings/password',
     icon: Lock,
-    allowedRoles: [UserRole.SUPER_ADMIN, UserRole.ADMIN],
+    allowedRoles: [UserRole.DOCTOR, UserRole.STAFF],
   },
   {
     title: 'Terms',
     href: '/settings/terms',
     icon: FileText,
-    allowedRoles: [UserRole.SUPER_ADMIN, UserRole.ADMIN],
+    allowedRoles: [UserRole.DOCTOR, UserRole.STAFF],
   },
   {
     title: 'Privacy',
     href: '/settings/privacy',
     icon: Shield,
-    allowedRoles: [UserRole.SUPER_ADMIN, UserRole.ADMIN],
+    allowedRoles: [UserRole.DOCTOR, UserRole.STAFF],
   },
   
 ]

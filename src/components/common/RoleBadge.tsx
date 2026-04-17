@@ -1,7 +1,7 @@
 import { Badge } from '@/components/ui/badge'
-import { Shield, Building2, Briefcase } from 'lucide-react'
+import { Stethoscope, Users, BadgeHelp } from 'lucide-react'
 import { cn } from '@/utils/cn'
-import { UserRole, LEGACY_ADMIN_ROLE_KEY } from '@/types/roles'
+import { UserRole, normalizeRoleKey } from '@/types/roles'
 import { getRoleDisplayName } from '@/utils/roleHelpers'
 
 interface RoleBadgeProps {
@@ -10,12 +10,13 @@ interface RoleBadgeProps {
   showIcon?: boolean
 }
 
-type BadgeTier = 'superAdmin' | 'admin' | 'business'
+type BadgeTier = 'doctor' | 'staff' | 'unknown'
 
 function badgeTier(role: string): BadgeTier {
-  if (role === UserRole.SUPER_ADMIN) return 'superAdmin'
-  if (role === UserRole.ADMIN || role === LEGACY_ADMIN_ROLE_KEY) return 'admin'
-  return 'business'
+  const normalized = normalizeRoleKey(role)
+  if (normalized === UserRole.DOCTOR) return 'doctor'
+  if (normalized === UserRole.STAFF) return 'staff'
+  return 'unknown'
 }
 
 export function RoleBadge({ role, className, showIcon = true }: RoleBadgeProps) {
@@ -26,22 +27,19 @@ export function RoleBadge({ role, className, showIcon = true }: RoleBadgeProps) 
       variant="outline"
       className={cn(
         'gap-1 font-medium border-0',
-        tier === 'superAdmin' &&
-          'bg-amber-100 text-amber-900 hover:bg-amber-200/90',
-        tier === 'admin' &&
-          'bg-purple-100 text-purple-800 hover:bg-purple-200/90',
-        tier === 'business' &&
-          'bg-blue-100 text-blue-800 hover:bg-blue-200/90',
+        tier === 'doctor' && 'bg-amber-100 text-amber-900 hover:bg-amber-200/90',
+        tier === 'staff' && 'bg-purple-100 text-purple-800 hover:bg-purple-200/90',
+        tier === 'unknown' && 'bg-slate-100 text-slate-800 hover:bg-slate-200/90',
         className
       )}
     >
       {showIcon &&
-        (tier === 'superAdmin' ? (
-          <Shield className="h-3 w-3" />
-        ) : tier === 'admin' ? (
-          <Building2 className="h-3 w-3" />
+        (tier === 'doctor' ? (
+          <Stethoscope className="h-3 w-3" />
+        ) : tier === 'staff' ? (
+          <Users className="h-3 w-3" />
         ) : (
-          <Briefcase className="h-3 w-3" />
+          <BadgeHelp className="h-3 w-3" />
         ))}
       {getRoleDisplayName(role)}
     </Badge>

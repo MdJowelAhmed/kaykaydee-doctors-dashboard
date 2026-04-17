@@ -87,21 +87,21 @@ function App() {
         >
           <Route index element={<RoleBasedRedirect />} />
           
-          {/* Dashboard — Super Admin + Admin only */}
+          {/* Dashboard — disabled (Doctor/Staff land on My Appointments) */}
           <Route
             path="dashboard"
             element={
-              <RoleBasedRoute allowedRoles={[...DASHBOARD_ALLOWED_ROLES]}>
+              <RoleBasedRoute allowedRoles={[]}>
                 <Dashboard />
               </RoleBasedRoute>
             }
           />
           
-          {/* User Management - Super Admin Only */}
+          {/* User Management - Doctor Only */}
           <Route 
             path="users" 
             element={
-              <RoleBasedRoute allowedRoles={[UserRole.SUPER_ADMIN]}>
+              <RoleBasedRoute allowedRoles={[UserRole.DOCTOR]}>
                 <UserList />
               </RoleBasedRoute>
             } 
@@ -109,7 +109,7 @@ function App() {
           <Route 
             path="users/:id" 
             element={
-              <RoleBasedRoute allowedRoles={[UserRole.SUPER_ADMIN]}>
+              <RoleBasedRoute allowedRoles={[UserRole.DOCTOR]}>
                 <UserDetails />
               </RoleBasedRoute>
             } 
@@ -118,7 +118,7 @@ function App() {
           <Route
             path="clinic-management"
             element={
-              <RoleBasedRoute allowedRoles={[UserRole.SUPER_ADMIN]}>
+              <RoleBasedRoute allowedRoles={[UserRole.DOCTOR]}>
                 <ClinicManagementPage />
               </RoleBasedRoute>
             }
@@ -126,11 +126,11 @@ function App() {
           
       
           
-          {/* Transactions History - Super Admin Only */}
+          {/* Transactions History - Doctor Only */}
           <Route 
             path="transactions-history" 
             element={
-              <RoleBasedRoute allowedRoles={[UserRole.SUPER_ADMIN]}>
+              <RoleBasedRoute allowedRoles={[UserRole.DOCTOR]}>
                 <TransactionsHistory />
               </RoleBasedRoute>
             } 
@@ -140,7 +140,7 @@ function App() {
           <Route
             path="subscription-packages"
             element={
-              <RoleBasedRoute allowedRoles={[UserRole.SUPER_ADMIN]}>
+              <RoleBasedRoute allowedRoles={[UserRole.DOCTOR]}>
                 <SubscriptionPackagePage />
               </RoleBasedRoute>
             }
@@ -149,7 +149,7 @@ function App() {
           <Route
             path="subscription-invoice"
             element={
-              <RoleBasedRoute allowedRoles={[UserRole.SUPER_ADMIN]}>
+              <RoleBasedRoute allowedRoles={[UserRole.DOCTOR]}>
                 <SubscriptionInvoicePage />
               </RoleBasedRoute>
             }
@@ -158,7 +158,7 @@ function App() {
           <Route
             path="subscription-manage"
             element={
-              <RoleBasedRoute allowedRoles={[UserRole.SUPER_ADMIN]}>
+              <RoleBasedRoute allowedRoles={[UserRole.DOCTOR]}>
                 <SubscriptionManagePage />
               </RoleBasedRoute>
             }
@@ -167,7 +167,7 @@ function App() {
           <Route
             path="admin-manage"
             element={
-              <RoleBasedRoute allowedRoles={[UserRole.SUPER_ADMIN]}>
+              <RoleBasedRoute allowedRoles={[UserRole.DOCTOR]}>
                 <AdminManagePage />
               </RoleBasedRoute>
             }
@@ -321,7 +321,7 @@ function App() {
             <Route 
               path="faq" 
               element={
-                <RoleBasedRoute allowedRoles={[UserRole.SUPER_ADMIN]}>
+                <RoleBasedRoute allowedRoles={[UserRole.DOCTOR]}>
                   <FAQ />
                 </RoleBasedRoute>
               } 

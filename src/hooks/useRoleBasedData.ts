@@ -3,12 +3,10 @@ import { useAppSelector } from '@/redux/hooks'
 import { UserRole, canAccessDashboard } from '@/types/roles'
 
 interface DataItem {
-  businessId?: string
-  userId?: string
   [key: string]: string | number | undefined
 }
 
-/** Super Admin and Admin see all rows; Business sees only its scope. */
+/** Doctor and Staff see all rows; other roles are denied on this dashboard. */
 export const useRoleBasedData = <T extends DataItem>(data: T[]): T[] => {
   const { user } = useAppSelector((state) => state.auth)
 
@@ -19,37 +17,26 @@ export const useRoleBasedData = <T extends DataItem>(data: T[]): T[] => {
       return data
     }
 
-    if (user.role === UserRole.BUSINESS && user.businessId) {
-      return data.filter(
-        (item) =>
-          item.businessId === user.businessId || item.userId === user.id
-      )
-    }
-
     return []
   }, [data, user])
 }
 
-/** True when the logged-in user is Admin (non–super-admin). */
-export const useIsAdmin = (): boolean => {
+/** True when the logged-in user is Staff. */
+export const useIsStaff = (): boolean => {
   const { user } = useAppSelector((state) => state.auth)
-  return user?.role === UserRole.ADMIN
+  return user?.role === UserRole.STAFF
 }
 
-/** @deprecated Use `useIsAdmin` (legacy name for the admin role). */
+/** @deprecated Use `useIsStaff` (legacy name for the staff role). */
 export const useIsHost = (): boolean => {
   const { user } = useAppSelector((state) => state.auth)
-  return user?.role === UserRole.ADMIN
+  return user?.role === UserRole.STAFF
 }
 
-export const useIsBusiness = (): boolean => {
+/** True when the logged-in user is Doctor. */
+export const useIsDoctor = (): boolean => {
   const { user } = useAppSelector((state) => state.auth)
-  return user?.role === UserRole.BUSINESS
-}
-
-export const useBusinessId = (): string | undefined => {
-  const { user } = useAppSelector((state) => state.auth)
-  return user?.businessId
+  return user?.role === UserRole.DOCTOR
 }
 
 export const useCanModifyItem = (item: DataItem): boolean => {
@@ -57,13 +44,6 @@ export const useCanModifyItem = (item: DataItem): boolean => {
 
   if (!user) return false
 
-  if (canAccessDashboard(user.role)) {
-    return true
-  }
-
-  if (user.role === UserRole.BUSINESS) {
-    return item.businessId === user.businessId || item.userId === user.id
-  }
-
-  return false
+  void item
+  return canAccessDashboard(user.role)
 }

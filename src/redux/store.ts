@@ -7,12 +7,20 @@ import calendarReducer from './slices/calendarSlice'
 import transactionReducer from './slices/transactionSlice'
 import faqReducer from './slices/faqSlice'
 import clinicReducer from './slices/clinicSlice'
+import myAppointmentsReducer from './slices/myAppointmentsSlice'
+import availabilityReducer from './slices/availabilitySlice'
+import myPatientsListReducer from './slices/myPatientsListSlice'
+import scheduleReducer from './slices/scheduleSlice'
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     users: userReducer,
     clinics: clinicReducer,
+    myAppointments: myAppointmentsReducer,
+    availability: availabilityReducer,
+    myPatientsList: myPatientsListReducer,
+    schedule: scheduleReducer,
     categories: categoryReducer,
     ui: uiReducer,
     calendar: calendarReducer,

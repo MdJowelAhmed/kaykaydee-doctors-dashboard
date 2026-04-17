@@ -16,6 +16,10 @@ import {
   Users,
   Building2,
   HelpCircle,
+  CalendarCheck,
+  CalendarOff,
+  UserRound,
+  CalendarRange,
 } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
@@ -42,6 +46,30 @@ const navItems: NavItem[] = [
     title: 'Dashboard',
     href: '/dashboard',
     icon: LayoutDashboard,
+    allowedRoles: [UserRole.SUPER_ADMIN, UserRole.ADMIN],
+  },
+  {
+    title: 'My Appointments',
+    href: '/my-appointments',
+    icon: CalendarCheck,
+    allowedRoles: [UserRole.SUPER_ADMIN, UserRole.ADMIN],
+  },
+  {
+    title: 'Availability',
+    href: '/availability',
+    icon: CalendarOff,
+    allowedRoles: [UserRole.SUPER_ADMIN, UserRole.ADMIN],
+  },
+  {
+    title: 'My Patients List',
+    href: '/my-patients-list',
+    icon: UserRound,
+    allowedRoles: [UserRole.SUPER_ADMIN, UserRole.ADMIN],
+  },
+  {
+    title: 'Schedule',
+    href: '/schedule',
+    icon: CalendarRange,
     allowedRoles: [UserRole.SUPER_ADMIN, UserRole.ADMIN],
   },
   {

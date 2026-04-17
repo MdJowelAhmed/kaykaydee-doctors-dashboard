@@ -57,6 +57,86 @@ export interface ClinicFilters {
   package: Clinic['packagePlan'] | 'all'
 }
 
+// ==================== Doctor Appointments (dashboard) ====================
+export type DoctorAppointmentStatus = 'pending' | 'completed' | 'cancelled' | 'confirmed'
+
+export interface DoctorAppointment {
+  id: string
+  /** Display ref e.g. 265853 → shown as #265853 */
+  serialNo: string
+  userId: string
+  patientName: string
+  contactNo: string
+  service: string
+  appointmentDate: string
+  roomNo: string
+  status: DoctorAppointmentStatus
+  notes?: string
+}
+
+export type MyAppointmentsDatePreset = 'all' | 'today' | 'week' | 'month'
+
+export interface MyAppointmentsFilters {
+  search: string
+  datePreset: MyAppointmentsDatePreset
+}
+
+// ==================== My Patients List ====================
+export type PatientListVisitStatus = 'complete' | 'absent'
+
+export interface MyPatientListRecord {
+  id: string
+  serialNo: string
+  userId: string
+  patientName: string
+  contactNo: string
+  service: string
+  appointmentDate: string
+  roomNo: string
+  status: PatientListVisitStatus
+  notes?: string
+}
+
+export interface MyPatientsListFilters {
+  search: string
+  datePreset: MyAppointmentsDatePreset
+  status: PatientListVisitStatus | 'all'
+}
+
+// ==================== Schedule (duty / weekly roster) ====================
+export interface ScheduleRecord {
+  id: string
+  serialNo: string
+  /** Day name e.g. Monday */
+  applyDay: string
+  /** Hours on duty; null means off day. */
+  dutyHours: number | null
+  /** Inclusive calendar date for duty (same day for single shifts); null when off. */
+  rangeStart: string | null
+  rangeEnd: string | null
+}
+
+// ==================== Availability (doctor schedule blocks) ====================
+export type AvailabilityStatus = 'pending' | 'approved' | 'rejected'
+
+/** Mirrors leave-style table: apply date, block length in days, inclusive date range, status. */
+export interface AvailabilityRecord {
+  id: string
+  serialNo: string
+  applyDate: string
+  /** Shown as "2 Day" in the Leave Time column (design parity with reference UI). */
+  blockDays: number
+  rangeStart: string
+  rangeEnd: string
+  status: AvailabilityStatus
+}
+
+export interface AvailabilityFilters {
+  search: string
+  datePreset: MyAppointmentsDatePreset
+  status: AvailabilityStatus | 'all'
+}
+
 // ==================== Product Types ====================
 export interface Product {
   id: string

@@ -56,16 +56,16 @@ export default function TermsSettings() {
       transition={{ duration: 0.3 }}
       className="space-y-6"
     >
-      <Card>
-        <CardHeader>
+      <Card className="bg-card shadow-sm">
+        <CardHeader className="bg-card text-accent p-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
+              <div className="h-10 w-10 rounded-lg bg-card text-accent flex items-center justify-center">
                 <FileText className="h-5 w-5 text-primary" />
               </div>
               <div>
-                <CardTitle>Terms & Conditions</CardTitle>
-                <CardDescription>
+                <CardTitle className="text-accent">Terms & Conditions</CardTitle>
+                <CardDescription className="text-accent">
                   Read-only preview of the Terms and Conditions
                 </CardDescription>
               </div>
@@ -73,7 +73,7 @@ export default function TermsSettings() {
           </div>
         </CardHeader>
         <CardContent>
-          <div className="border rounded-xl p-6 min-h-[500px] bg-muted/20">
+          <div className="border rounded-xl p-6 min-h-[500px] bg-card text-accent">
             <div
               className="prose prose-sm dark:prose-invert max-w-none"
               dangerouslySetInnerHTML={{ __html: terms }}

@@ -59,9 +59,9 @@ const FAQ = () => {
       transition={{ duration: 0.3 }}
       className="space-y-6"
     >
-      <Card className="bg-white border-0 shadow-sm">
-        <CardHeader className="flex flex-row items-center justify-between pb-6">
-          <CardTitle className="text-xl font-bold text-slate-800">FAQ</CardTitle>
+      <Card className="bg-card   border-0 shadow-sm">
+        <CardHeader className="flex flex-row items-center justify-between pb-6 bg-card text-accent p-6">
+          <CardTitle className="text-xl font-bold text-accent">FAQ</CardTitle>
           <div className="flex items-center gap-3">
             {/* Search Input */}
             <SearchInput

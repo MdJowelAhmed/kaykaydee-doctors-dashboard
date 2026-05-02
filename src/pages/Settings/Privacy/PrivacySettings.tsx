@@ -77,16 +77,16 @@ export default function PrivacySettings() {
       transition={{ duration: 0.3 }}
       className="space-y-6"
     >
-      <Card>
-        <CardHeader>
+      <Card className="bg-card shadow-sm">
+        <CardHeader className="bg-card text-accent p-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
+              <div className="h-10 w-10 rounded-lg bg-card text-accent flex items-center justify-center">
                 <Shield className="h-5 w-5 text-primary" />
               </div>
-              <div>
-                <CardTitle>Privacy Policy</CardTitle>
-                <CardDescription>
+              <div >
+                <CardTitle className="text-accent">Privacy Policy</CardTitle>
+                <CardDescription className="text-accent">
                   Read-only preview of the Privacy Policy
                 </CardDescription>
               </div>
@@ -94,7 +94,7 @@ export default function PrivacySettings() {
           </div>
         </CardHeader>
         <CardContent>
-          <div className="border rounded-xl p-6 min-h-[500px] bg-muted/20">
+          <div className="border rounded-xl p-6 min-h-[500px] bg-card text-accent">
             <div
               className="prose prose-sm dark:prose-invert max-w-none"
               dangerouslySetInnerHTML={{ __html: privacy }}

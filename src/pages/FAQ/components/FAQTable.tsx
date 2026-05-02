@@ -12,7 +12,7 @@ export function FAQTable({
     <div className="w-full overflow-auto">
       <table className="w-full min-w-[700px]">
         <thead>
-          <tr className="bg-[#CCF3F5] text-slate-800">
+          <tr className="bg-card text-accent p-6">
             <th className="px-6 py-4 text-left text-sm font-bold">Question</th>
             <th className="px-6 py-4 text-left text-sm font-bold">Answer</th>
             {/* <th className="px-6 py-4 text-left text-sm font-bold">Created At</th>
@@ -40,14 +40,14 @@ export function FAQTable({
               >
                 {/* Question Column */}
                 <td className="px-6 py-4">
-                  <span className="text-sm font-medium text-slate-800">
+                  <span className="text-sm font-medium text-accent">
                     {faq.question}
                   </span>
                 </td>
 
                 {/* Answer Column */}
                 <td className="px-6 py-4">
-                  <span className="text-sm text-slate-700 line-clamp-2 max-w-lg">
+                  <span className="text-sm text-accent line-clamp-2 max-w-lg">
                     {faq.answer}
                   </span>
                 </td>

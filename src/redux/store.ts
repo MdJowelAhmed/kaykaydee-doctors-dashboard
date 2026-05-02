@@ -2,7 +2,8 @@ import { configureStore } from '@reduxjs/toolkit'
 import authReducer from './slices/authSlice'
 import userReducer from './slices/userSlice'
 import categoryReducer from './slices/categorySlice'
-import uiReducer from './slices/uiSlice'
+import uiReducer, { UI_INITIAL_STATE } from './slices/uiSlice'
+import { getThemeFromStorage, persistTheme } from '@/utils/theme'
 import calendarReducer from './slices/calendarSlice'
 import transactionReducer from './slices/transactionSlice'
 import faqReducer from './slices/faqSlice'
@@ -27,10 +28,25 @@ export const store = configureStore({
     transactions: transactionReducer,
     faqs: faqReducer,
   },
+  preloadedState: {
+    ui: {
+      ...UI_INITIAL_STATE,
+      theme: getThemeFromStorage(),
+    },
+  },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
     }),
+})
+
+let lastPersistedTheme = store.getState().ui.theme
+store.subscribe(() => {
+  const next = store.getState().ui.theme
+  if (next !== lastPersistedTheme) {
+    lastPersistedTheme = next
+    persistTheme(next)
+  }
 })
 
 export type RootState = ReturnType<typeof store.getState>

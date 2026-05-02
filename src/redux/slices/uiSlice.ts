@@ -19,7 +19,7 @@ interface UIState {
   }
 }
 
-const initialState: UIState = {
+export const UI_INITIAL_STATE: UIState = {
   modal: {
     isOpen: false,
     type: null,
@@ -37,7 +37,7 @@ const initialState: UIState = {
 
 const uiSlice = createSlice({
   name: 'ui',
-  initialState,
+  initialState: UI_INITIAL_STATE,
   reducers: {
     openModal: (state, action: PayloadAction<{ type: ModalType; data?: unknown }>) => {
       state.modal.isOpen = true

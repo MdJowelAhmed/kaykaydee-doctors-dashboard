@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom'
-import { Menu, LogOut, User, Settings } from 'lucide-react'
+import { Menu, LogOut, User, Settings, Sun, Moon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
@@ -7,19 +7,29 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { toggleSidebar } from '@/redux/slices/uiSlice'
+import { toggleSidebar, toggleTheme, setTheme } from '@/redux/slices/uiSlice'
 import { logout } from '@/redux/slices/authSlice'
 import { getInitials } from '@/utils/formatters'
 import { NotificationPreviewDialog } from '@/components/layout/NotificationPreviewDialog'
 import { useState } from 'react'
 import { ConfirmDialog } from '@/components/common/ConfirmDialog'
+import { DASHBOARD_HEADER_H } from '@/components/layout/dashboardLayoutTokens'
+import { cn } from '@/utils/cn'
 
 const routeTitles: Record<string, string> = {
   '/dashboard': 'Dashboard',
+  '/my-appointments': 'My Appointments',
+  '/my-patients-list': 'My Patients List',
+  '/schedule': 'Schedule',
+  '/availability': 'Availability',
+  '/zealth-ai': 'AI Manager',
   '/cars': 'Car List',
   '/my-listing': 'My Listing',
   '/booking-management': 'Booking Management',
@@ -40,18 +50,28 @@ const routeTitles: Record<string, string> = {
   '/settings/terms': 'Terms & Conditions',
   '/settings/privacy': 'Privacy Policy',
   '/settings/about-us': 'About Us',
+  '/settings/faq': 'FAQ',
+}
+
+function titleForPath(pathname: string): string {
+  if (routeTitles[pathname]) return routeTitles[pathname]
+  const prefix = Object.keys(routeTitles)
+    .filter((k) => k !== '/')
+    .sort((a, b) => b.length - a.length)
+    .find((route) => pathname.startsWith(route))
+  return prefix ? routeTitles[prefix] : 'Dashboard'
 }
 
 export function Header() {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  // const { theme } = useAppSelector((state) => state.ui)
+  const { theme } = useAppSelector((state) => state.ui)
   const { user } = useAppSelector((state) => state.auth)
   const location = useLocation()
   const [logoutDialogOpen, setLogoutDialogOpen] = useState(false)
   const [isLoggingOut, setIsLoggingOut] = useState(false)
 
-  const pageTitle = routeTitles[location.pathname] || 'Dashboard'
+  const pageTitle = titleForPath(location.pathname)
 
   const handleLogout = async () => {
     setIsLoggingOut(true)
@@ -64,63 +84,49 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-30 h-20 shadow-md bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="flex h-full items-center justify-between px-4 lg:px-6">
-        {/* Left side */}
-        <div className="flex items-center gap-4">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => dispatch(toggleSidebar())}
-            className="lg:hidden"
-          >
-            <Menu className="h-5 w-5" />
-          </Button>
-          <div>
-            <h1 className="text-xl font-semibold text-accent">{pageTitle}</h1>
-            <p className="text-sm text-accent hidden sm:block">
-              Welcome back, {user?.firstName || 'Admin'}
-            </p>
+   <div className='bg-background  p-2 fixed top-0 left-0 right-0 h-28'>
+     <header
+      className="fixed left-0 right-0 top-0 z-[100] mx-5 mt-4 h-20 rounded-2xl bg-card shadow-md backdrop-blur supports-[backdrop-filter]:bg-background/60"
+    >
+      <div className="mx-auto flex h-full w-full max-w-[1920px] items-center justify-between gap-3 px-4 sm:px-5 lg:px-6">
+      <div className="text-primary text-white font-bold text-lg">
+            <img src="/logo.png" alt="Booking Dashboard" className="h-16 w-28" />
+            {/* <img src="/assets/logo3.png" alt="Booking Dashboard" className="h-8 w-20 object-contain" /> */}
           </div>
-        </div>
 
-        {/* Center - Search (hidden on mobile) */}
-        {/* <div className="hidden md:flex flex-1 max-w-md mx-8">
-          <div className="relative w-full">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <Input
-              type="search"
-              placeholder="Search anything..."
-              className="pl-9 bg-muted/50"
-            />
-          </div>
-        </div> */}
+        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => dispatch(toggleTheme())}
+                className="h-10 w-10 "
+                aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              >
+                {theme === 'dark' ? (
+                  <Sun className="h-[1.15rem] w-[1.15rem] text-amber-500" strokeWidth={2} />
+                ) : (
+                  <Moon className="h-[1.15rem] w-[1.15rem] text-primary" strokeWidth={2} />
+                )}
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom" className="text-xs">
+              {theme === 'dark' ? 'Light mode' : 'Dark mode'}
+            </TooltipContent>
+          </Tooltip>
 
-        {/* Right side */}
-        <div className="flex items-center gap-5">
-          {/* Theme toggle */}
-          {/* <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => dispatch(toggleTheme())}
-          >
-            {theme === 'light' ? (
-              <Moon className="h-5 w-5 text-accent" />
-            ) : (
-              <Sun className="h-5 w-5 text-accent" />
-            )}
-          </Button> */}
-
-          {/* Notifications — anchored popover under bell */}
           <NotificationPreviewDialog />
 
-          {/* User menu */}
-          <DropdownMenu>
+          {/* <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="relative h-9 w-9 rounded-full">
-                <Avatar className="h-12 w-12">
+              <Button
+                variant="outline"
+                className="h-10 w-10 rounded-full border-border/80 bg-background/50 p-0"
+              >
+                <Avatar className="h-9 w-9">
                   <AvatarImage src={user?.avatar} />
-                  <AvatarFallback className="text-white bg-primary" >
+                  <AvatarFallback className="bg-primary text-sm font-medium text-primary-foreground">
                     {getInitials(user?.firstName, user?.lastName)}
                   </AvatarFallback>
                 </Avatar>
@@ -138,12 +144,27 @@ export function Header() {
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
+              <DropdownMenuLabel className="text-xs font-normal text-muted-foreground">
+                Appearance
+              </DropdownMenuLabel>
+              <DropdownMenuRadioGroup
+                value={theme}
+                onValueChange={(v) => dispatch(setTheme(v as 'light' | 'dark'))}
+              >
+                <DropdownMenuRadioItem value="light" className="text-sm">
+                  Light
+                </DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="dark" className="text-sm">
+                  Dark
+                </DropdownMenuRadioItem>
+              </DropdownMenuRadioGroup>
+              <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => navigate('/settings/profile')}>
-                <User className="h-4 w-4 mr-2" />
+                <User className="mr-2 h-4 w-4" />
                 Profile
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => navigate('/settings/password')}>
-                <Settings className="h-4 w-4 mr-2" />
+                <Settings className="mr-2 h-4 w-4" />
                 Settings
               </DropdownMenuItem>
               <DropdownMenuSeparator />
@@ -151,11 +172,11 @@ export function Header() {
                 onClick={() => setLogoutDialogOpen(true)}
                 className="text-destructive focus:text-destructive"
               >
-                <LogOut className="h-4 w-4 mr-2" />
+                <LogOut className="mr-2 h-4 w-4" />
                 Log out
               </DropdownMenuItem>
             </DropdownMenuContent>
-          </DropdownMenu>
+          </DropdownMenu> */}
         </div>
       </div>
       <ConfirmDialog
@@ -171,5 +192,6 @@ export function Header() {
         isLoading={isLoggingOut}
       />
     </header>
+   </div>
   )
 }

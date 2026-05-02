@@ -87,7 +87,7 @@ export default function ProfileSettings() {
       className="flex flex-col gap-6"
     >
       {/* Top profile banner */}
-      <Card className="overflow-hidden rounded-2xl border border-indigo-500/40 bg-slate-900 shadow-sm">
+      <Card className="overflow-hidden rounded-2xl bg-card shadow-sm">
         <CardContent className="p-0">
           <div className="flex items-stretch gap-5 p-4 sm:p-5">
             <div className="h-[110px] w-[140px] shrink-0 overflow-hidden rounded-xl bg-slate-800 ring-1 ring-white/10">
@@ -99,7 +99,7 @@ export default function ProfileSettings() {
                 <p className="mt-1 text-xs text-white/70">{roleLabel}</p>
                 <p className="mt-2 text-xs text-white/60">{idLabel}</p>
               </div>
-              <span className="inline-flex items-center rounded-full bg-violet-600/20 px-4 py-1 text-xs font-medium text-violet-200 ring-1 ring-violet-500/40">
+              <span className="inline-flex items-center rounded-full xt-xs font-medium text-accent px-2 ring-1 ring-violet-500/40">
                 {status}
               </span>
             </div>
@@ -108,7 +108,7 @@ export default function ProfileSettings() {
       </Card>
 
       {/* Form card */}
-      <Card className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm">
+      <Card className="overflow-hidden rounded-2xl bg-card shadow-sm">
         <CardContent className="p-5 sm:p-6">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

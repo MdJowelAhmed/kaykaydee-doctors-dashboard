@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import { Card } from '@/components/ui/card'
 
 type DateFilter = 'all' | '7d' | '30d' | '90d'
 
@@ -79,22 +80,22 @@ export default function AboutUsSettings() {
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25 }}
-      className="-mx-6 -mt-6 mb-0 min-h-[calc(100vh-5rem)] bg-[#F3F4F6] px-6 pb-10 pt-6 lg:-mx-8 lg:px-8"
+      className="-mx-6 -mt-6 mb-0 min-h-[calc(100vh-5rem)]  px-6 pb-10 pt-6 lg:-mx-8 lg:px-8"
     >
       <div className="mx-auto max-w-6xl space-y-6">
-        <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
+        <Card className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end bg-card text-accent p-6">
           <SearchInput
             value={search}
             onChange={setSearch}
             placeholder="Search here"
             className="w-full sm:w-[min(100%,280px)] sm:ml-auto"
-            inputClassName=" rounded-lg border-[#E5E7EB] bg-white text-[#111827] placeholder:text-[#9CA3AF] shadow-sm"
+            inputClassName=" rounded-lg bg-background text-accent placeholder:text-accent shadow-sm"
           />
           <Select
             value={dateFilter}
             onValueChange={(v) => setDateFilter(v as DateFilter)}
           >
-            <SelectTrigger className=" w-full rounded-lg border-[#E5E7EB] bg-white text-[#374151] shadow-sm sm:w-[140px]">
+            <SelectTrigger className=" w-full rounded-lg bg-background text-accent shadow-sm sm:w-[140px]">
               <SelectValue placeholder="Date" />
             </SelectTrigger>
             <SelectContent>
@@ -104,24 +105,24 @@ export default function AboutUsSettings() {
               <SelectItem value="90d">Last 90 days</SelectItem>
             </SelectContent>
           </Select>
-        </div>
+        </Card>
 
         <div className="space-y-4">
           {filtered.length === 0 ? (
-            <div className="rounded-xl border border-[#E5E7EB] bg-white p-10 text-center text-sm text-[#6B7280] shadow-sm">
+            <div className="rounded-xl  bg-card p-10 text-center text-sm text-accent shadow-sm">
               No sections match your search or date filter.
             </div>
           ) : (
             filtered.map((section) => (
               <article
                 key={section.id}
-                className="flex gap-4 rounded-xl border border-[#E5E7EB] bg-white p-5 shadow-sm"
+                className="flex gap-4 rounded-xl  bg-card p-5 shadow-sm"
               >
                 <div className="min-w-0 flex-1">
-                  <h2 className="text-base font-bold text-[#111827]">
+                  <h2 className="text-base font-bold text-accent">
                     {section.title}
                   </h2>
-                  <p className="mt-2 text-sm leading-relaxed text-[#6B7280]">
+                  <p className="mt-2 text-sm leading-relaxed text-accent">
                     {section.body}
                   </p>
                 </div>

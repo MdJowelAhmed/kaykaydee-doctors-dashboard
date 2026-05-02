@@ -46,10 +46,10 @@ export function AppointmentsTable({
   onInfo,
 }: AppointmentsTableProps) {
   return (
-    <div className="w-full overflow-auto rounded-2xl border border-slate-100 bg-white shadow-sm">
+    <div className="w-full overflow-auto rounded-2xl border  bg-card shadow-sm">
       <table className="w-full min-w-[1100px]">
         <thead>
-          <tr className="bg-slate-100 text-slate-800">
+          <tr className="bg-primary text-accent-foreground">
             <th className="px-5 py-3.5 text-left text-sm font-semibold first:rounded-tl-2xl">
               S. No
             </th>
@@ -65,10 +65,10 @@ export function AppointmentsTable({
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-100">
+        <tbody className="divide-y divide-border">
           {appointments.length === 0 ? (
             <tr>
-              <td colSpan={9} className="px-5 py-12 text-center text-slate-500 text-sm">
+              <td colSpan={9} className="px-5 py-12 text-center text-sm text-muted-foreground">
                 No appointments found
               </td>
             </tr>
@@ -79,30 +79,30 @@ export function AppointmentsTable({
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.02 * index }}
-                className="hover:bg-slate-50/80 transition-colors"
+                className="transition-colors hover:bg-muted/45"
               >
                 <td className="px-5 py-3.5">
-                  <span className="text-sm font-medium text-slate-700">#{row.serialNo}</span>
+                  <span className="text-sm font-medium text-muted-foreground">#{row.serialNo}</span>
                 </td>
                 <td className="px-5 py-3.5">
-                  <span className="text-sm tabular-nums text-slate-800">{row.userId}</span>
+                  <span className="text-sm tabular-nums text-foreground">{row.userId}</span>
                 </td>
                 <td className="px-5 py-3.5">
-                  <span className="text-sm text-slate-800">{row.patientName}</span>
+                  <span className="text-sm text-foreground">{row.patientName}</span>
                 </td>
                 <td className="px-5 py-3.5">
-                  <span className="text-sm text-slate-700">{row.contactNo}</span>
+                  <span className="text-sm text-muted-foreground">{row.contactNo}</span>
                 </td>
                 <td className="px-5 py-3.5">
-                  <span className="text-sm text-slate-800">{row.service}</span>
+                  <span className="text-sm text-foreground">{row.service}</span>
                 </td>
                 <td className="px-5 py-3.5">
-                  <span className="text-sm text-slate-700">
+                  <span className="text-sm text-muted-foreground">
                     {formatDate(row.appointmentDate, 'd MMM yyyy')}
                   </span>
                 </td>
                 <td className="px-5 py-3.5">
-                  <span className="text-sm text-slate-700 lowercase">{row.roomNo}</span>
+                  <span className="text-sm text-muted-foreground lowercase">{row.roomNo}</span>
                 </td>
                 <td className="px-5 py-3.5">
                   <Select
@@ -132,7 +132,7 @@ export function AppointmentsTable({
                       type="button"
                       variant="ghost"
                       size="icon"
-                      className="h-9 w-9 rounded-full border border-slate-200 text-[#1A284B] hover:bg-slate-100"
+                      className="h-9 w-9 rounded-full border border-border text-foreground hover:bg-muted"
                       onClick={() => onInfo(row)}
                       aria-label="Appointment details"
                     >

@@ -101,19 +101,21 @@ export default function MyAppointmentsPage() {
     >
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#CEF8DA] text-[#0C5822]">
+          <div
+            className="flex h-11 w-11 items-center justify-center rounded-xl bg-card text-accent shadow-sm ring-1 ring-emerald-500/20 dark:bg-emerald-500/20 dark:text-emerald-300 dark:ring-emerald-400/25"
+          >
             <CalendarCheck className="h-5 w-5" />
           </div>
           <div>
-            <h1 className="text-xl font-semibold text-slate-900 tracking-tight">My Appointments</h1>
-            <p className="text-sm text-muted-foreground">
+            <h1 className="text-xl font-semibold tracking-tight text-foreground">My Appointments</h1>
+            <p className="text-sm text-accent">
               Search, filter by date, and manage appointment status.
             </p>
           </div>
         </div>
       </div>
 
-      <Card className="bg-white border border-slate-100 shadow-sm overflow-hidden">
+      <Card className="overflow-hidden  bg-card text-accent shadow-sm">
         <CardContent className="p-5 sm:p-6">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <SearchInput
@@ -121,11 +123,11 @@ export default function MyAppointmentsPage() {
               onChange={handleSearch}
               placeholder="Search here"
               className="w-full lg:flex-1 lg:max-w-xl"
-              inputClassName="h-11 rounded-full border-slate-200 bg-white"
+              inputClassName="h-11 rounded-full bg-background"
             />
             <Select value={datePreset} onValueChange={handleDatePreset}>
-              <SelectTrigger className="h-11 w-full lg:w-48 rounded-full border-slate-200 bg-white gap-2">
-                <span className="text-xs font-semibold text-muted-foreground shrink-0">Date</span>
+              <SelectTrigger className="h-11 w-full gap-2 rounded-full bg-background lg:w-48">
+                <span className="text-xs font-semibold text-muted-foreground shrink-0"></span>
                 <SelectValue placeholder="All dates" />
               </SelectTrigger>
               <SelectContent align="end">

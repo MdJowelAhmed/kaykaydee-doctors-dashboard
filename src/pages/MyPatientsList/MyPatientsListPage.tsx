@@ -1,6 +1,5 @@
 import { useMemo, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { UserRound } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import {
   Select,
@@ -103,7 +102,7 @@ export default function MyPatientsListPage() {
     >
 
 
-      <Card className="overflow-hidden border border-border bg-card text-accent shadow-sm">
+      <Card className="overflow-hidden bg-card text-accent shadow-sm">
         <CardContent className="p-5 sm:p-6">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-end">
             <div className="flex flex-col gap-3 lg:flex-row lg:items-center justify-end">

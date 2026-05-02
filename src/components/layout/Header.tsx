@@ -1,77 +1,62 @@
-import { useLocation, useNavigate } from 'react-router-dom'
-import { Menu, LogOut, User, Settings, Sun, Moon } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { Sun, Moon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { toggleSidebar, toggleTheme, setTheme } from '@/redux/slices/uiSlice'
+import {  toggleTheme, } from '@/redux/slices/uiSlice'
 import { logout } from '@/redux/slices/authSlice'
-import { getInitials } from '@/utils/formatters'
 import { NotificationPreviewDialog } from '@/components/layout/NotificationPreviewDialog'
 import { useState } from 'react'
 import { ConfirmDialog } from '@/components/common/ConfirmDialog'
-import { DASHBOARD_HEADER_H } from '@/components/layout/dashboardLayoutTokens'
-import { cn } from '@/utils/cn'
+// const routeTitles: Record<string, string> = {
+//   '/dashboard': 'Dashboard',
+//   '/my-appointments': 'My Appointments',
+//   '/my-patients-list': 'My Patients List',
+//   '/schedule': 'Schedule',
+//   '/availability': 'Availability',
+//   '/zealth-ai': 'AI Manager',
+//   '/cars': 'Car List',
+//   '/my-listing': 'My Listing',
+//   '/booking-management': 'Booking Management',
+//   '/calender': 'Calendar',
+//   '/transactions-history': 'Transactions History',
+//   '/reviews-ratings': 'Reviews & Ratings',
+//   '/notification': 'Notification',
+//   '/subscription-packages': 'Subscription Package',
+//   '/support': 'Support',
+//   '/client-management': 'Client Management',
+//   '/agency-management': 'Agency Management',
+//   '/users': 'User Management',
+//   '/controller': 'Controller',
+//   '/products': 'Product Management',
+//   '/categories': 'Category Management',
+//   '/settings/profile': 'Profile Settings',
+//   '/settings/password': 'Change Password',
+//   '/settings/terms': 'Terms & Conditions',
+//   '/settings/privacy': 'Privacy Policy',
+//   '/settings/about-us': 'About Us',
+//   '/settings/faq': 'FAQ',
+// }
 
-const routeTitles: Record<string, string> = {
-  '/dashboard': 'Dashboard',
-  '/my-appointments': 'My Appointments',
-  '/my-patients-list': 'My Patients List',
-  '/schedule': 'Schedule',
-  '/availability': 'Availability',
-  '/zealth-ai': 'AI Manager',
-  '/cars': 'Car List',
-  '/my-listing': 'My Listing',
-  '/booking-management': 'Booking Management',
-  '/calender': 'Calendar',
-  '/transactions-history': 'Transactions History',
-  '/reviews-ratings': 'Reviews & Ratings',
-  '/notification': 'Notification',
-  '/subscription-packages': 'Subscription Package',
-  '/support': 'Support',
-  '/client-management': 'Client Management',
-  '/agency-management': 'Agency Management',
-  '/users': 'User Management',
-  '/controller': 'Controller',
-  '/products': 'Product Management',
-  '/categories': 'Category Management',
-  '/settings/profile': 'Profile Settings',
-  '/settings/password': 'Change Password',
-  '/settings/terms': 'Terms & Conditions',
-  '/settings/privacy': 'Privacy Policy',
-  '/settings/about-us': 'About Us',
-  '/settings/faq': 'FAQ',
-}
-
-function titleForPath(pathname: string): string {
-  if (routeTitles[pathname]) return routeTitles[pathname]
-  const prefix = Object.keys(routeTitles)
-    .filter((k) => k !== '/')
-    .sort((a, b) => b.length - a.length)
-    .find((route) => pathname.startsWith(route))
-  return prefix ? routeTitles[prefix] : 'Dashboard'
-}
+// function titleForPath(pathname: string): string {
+//   if (routeTitles[pathname]) return routeTitles[pathname]
+//   const prefix = Object.keys(routeTitles)
+//     .filter((k) => k !== '/')
+//     .sort((a, b) => b.length - a.length)
+//     .find((route) => pathname.startsWith(route))
+//   return prefix ? routeTitles[prefix] : 'Dashboard'
+// }
 
 export function Header() {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const { theme } = useAppSelector((state) => state.ui)
-  const { user } = useAppSelector((state) => state.auth)
-  const location = useLocation()
+  // const { user } = useAppSelector((state) => state.auth)
+  // const location = useLocation()
   const [logoutDialogOpen, setLogoutDialogOpen] = useState(false)
   const [isLoggingOut, setIsLoggingOut] = useState(false)
 
-  const pageTitle = titleForPath(location.pathname)
+  // const pageTitle = titleForPath(location.pathname)
 
   const handleLogout = async () => {
     setIsLoggingOut(true)

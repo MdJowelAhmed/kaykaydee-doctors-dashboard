@@ -22,10 +22,10 @@ interface ScheduleTableProps {
 
 export function ScheduleTable({ rows, onInfo }: ScheduleTableProps) {
   return (
-    <div className="w-full overflow-auto rounded-2xl border border-slate-100 bg-white shadow-sm">
+    <div className="w-full overflow-auto rounded-2xl border border-border bg-card shadow-sm">
       <table className="w-full min-w-[800px]">
         <thead>
-          <tr className="bg-slate-100 text-slate-800">
+          <tr className="bg-primary text-accent-foreground">
             <th className="px-5 py-3.5 text-left text-sm font-semibold first:rounded-tl-2xl">
               S. No
             </th>
@@ -37,10 +37,10 @@ export function ScheduleTable({ rows, onInfo }: ScheduleTableProps) {
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-100">
+        <tbody className="divide-y divide-border">
           {rows.length === 0 ? (
             <tr>
-              <td colSpan={5} className="px-5 py-12 text-center text-slate-500 text-sm">
+              <td colSpan={5} className="px-5 py-12 text-center text-sm text-muted-foreground">
                 No schedule rows
               </td>
             </tr>
@@ -53,19 +53,21 @@ export function ScheduleTable({ rows, onInfo }: ScheduleTableProps) {
                   initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.02 * index }}
-                  className="hover:bg-slate-50/80 transition-colors"
+                  className="transition-colors hover:bg-muted/45"
                 >
                   <td className="px-5 py-3.5">
-                    <span className="text-sm font-medium text-slate-700">#{row.serialNo}</span>
+                    <span className="text-sm font-medium text-muted-foreground">#{row.serialNo}</span>
                   </td>
                   <td className="px-5 py-3.5">
-                    <span className="text-sm text-slate-800">{row.applyDay}</span>
+                    <span className="text-sm text-foreground">{row.applyDay}</span>
                   </td>
                   <td className="px-5 py-3.5">
                     {isOff ? (
-                      <span className="text-sm font-medium text-red-600">Off Day</span>
+                      <span className="text-sm font-medium text-destructive dark:text-red-400">
+                        Off Day
+                      </span>
                     ) : (
-                      <span className="text-sm text-slate-800">
+                      <span className="text-sm text-foreground">
                         {row.dutyHours} hour{row.dutyHours === 1 ? '' : 's'}
                       </span>
                     )}
@@ -74,7 +76,7 @@ export function ScheduleTable({ rows, onInfo }: ScheduleTableProps) {
                     <span
                       className={cn(
                         'text-sm',
-                        isOff ? 'text-slate-400' : 'text-slate-700'
+                        isOff ? 'text-muted-foreground/70' : 'text-muted-foreground'
                       )}
                     >
                       {formatDuration(row)}
@@ -86,7 +88,7 @@ export function ScheduleTable({ rows, onInfo }: ScheduleTableProps) {
                         type="button"
                         variant="ghost"
                         size="icon"
-                        className="h-9 w-9 rounded-full border border-slate-200 text-[#1A284B] hover:bg-slate-100"
+                        className="h-9 w-9 rounded-full border border-border text-foreground hover:bg-muted"
                         onClick={() => onInfo(row)}
                         aria-label="Schedule details"
                       >

@@ -189,7 +189,7 @@ export function AddEditAvailabilityModal({
           <Button type="button" variant="outline" onClick={onClose}>
             Cancel
           </Button>
-          <Button type="submit" className="bg-[#1A284B] hover:bg-[#1A284B]/90">
+          <Button type="submit" className="bg-secondary text-white hover:bg-secondary/90 dark:text-white">
             {mode === 'add' ? 'Save' : 'Update'}
           </Button>
         </div>

@@ -9,13 +9,13 @@ import type { AvailabilityRecord, AvailabilityStatus } from '@/types'
 function statusPillClass(status: AvailabilityStatus): string {
   switch (status) {
     case 'pending':
-      return 'bg-slate-400 text-white'
+      return 'bg-muted-foreground/75 text-white'
     case 'approved':
       return 'bg-emerald-600 text-white'
     case 'rejected':
       return 'bg-red-500 text-white'
     default:
-      return 'bg-slate-400 text-white'
+      return 'bg-muted-foreground/75 text-white'
   }
 }
 
@@ -40,10 +40,10 @@ interface AvailabilityTableProps {
 
 export function AvailabilityTable({ rows, onInfo, onEdit, onDelete }: AvailabilityTableProps) {
   return (
-    <div className="w-full overflow-auto rounded-2xl border border-slate-100 bg-white shadow-sm">
+    <div className="w-full overflow-auto rounded-2xl border border-border bg-card shadow-sm">
       <table className="w-full min-w-[960px]">
         <thead>
-          <tr className="bg-slate-100 text-slate-800">
+          <tr className="bg-primary text-accent-foreground">
             <th className="px-5 py-3.5 text-left text-sm font-semibold first:rounded-tl-2xl">
               S. No
             </th>
@@ -56,10 +56,10 @@ export function AvailabilityTable({ rows, onInfo, onEdit, onDelete }: Availabili
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-100">
+        <tbody className="divide-y divide-border">
           {rows.length === 0 ? (
             <tr>
-              <td colSpan={6} className="px-5 py-12 text-center text-slate-500 text-sm">
+              <td colSpan={6} className="px-5 py-12 text-center text-sm text-muted-foreground">
                 No availability records found
               </td>
             </tr>
@@ -70,19 +70,19 @@ export function AvailabilityTable({ rows, onInfo, onEdit, onDelete }: Availabili
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.02 * index }}
-                className="hover:bg-slate-50/80 transition-colors"
+                className="transition-colors hover:bg-muted/45"
               >
                 <td className="px-5 py-3.5">
-                  <span className="text-sm font-medium text-slate-700">#{row.serialNo}</span>
+                  <span className="text-sm font-medium text-muted-foreground">#{row.serialNo}</span>
                 </td>
                 <td className="px-5 py-3.5">
-                  <span className="text-sm text-slate-800">{formatCommaDate(row.applyDate)}</span>
+                  <span className="text-sm text-foreground">{formatCommaDate(row.applyDate)}</span>
                 </td>
                 <td className="px-5 py-3.5">
-                  <span className="text-sm text-slate-800">{row.blockDays} Day</span>
+                  <span className="text-sm text-foreground">{row.blockDays} Day</span>
                 </td>
                 <td className="px-5 py-3.5">
-                  <span className="text-sm text-slate-700">{formatRange(row.rangeStart, row.rangeEnd)}</span>
+                  <span className="text-sm text-muted-foreground">{formatRange(row.rangeStart, row.rangeEnd)}</span>
                 </td>
                 <td className="px-5 py-3.5">
                   <span
@@ -102,7 +102,7 @@ export function AvailabilityTable({ rows, onInfo, onEdit, onDelete }: Availabili
                           type="button"
                           variant="ghost"
                           size="icon"
-                          className="h-9 w-9 text-slate-500 hover:text-[#1A284B] hover:bg-slate-100"
+                          className="h-9 w-9 text-muted-foreground hover:bg-muted hover:text-foreground"
                           onClick={() => onInfo(row)}
                           aria-label="Details"
                         >
@@ -117,7 +117,7 @@ export function AvailabilityTable({ rows, onInfo, onEdit, onDelete }: Availabili
                           type="button"
                           variant="ghost"
                           size="icon"
-                          className="h-9 w-9 text-slate-500 hover:text-[#1A284B] hover:bg-slate-100"
+                          className="h-9 w-9 text-muted-foreground hover:bg-muted hover:text-foreground"
                           onClick={() => onEdit(row)}
                           aria-label="Edit"
                         >

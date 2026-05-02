@@ -101,34 +101,22 @@ export default function MyPatientsListPage() {
       transition={{ duration: 0.3 }}
       className="flex flex-col gap-6"
     >
-      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#E8EDF5] text-[#1A284B]">
-            <UserRound className="h-5 w-5" />
-          </div>
-          <div>
-            <h1 className="text-xl font-semibold text-slate-900 tracking-tight">My Patients List</h1>
-            <p className="text-sm text-muted-foreground">
-              Search and filter your patient appointment records.
-            </p>
-          </div>
-        </div>
-      </div>
 
-      <Card className="bg-white border border-slate-100 shadow-sm overflow-hidden">
+
+      <Card className="overflow-hidden border border-border bg-card text-accent shadow-sm">
         <CardContent className="p-5 sm:p-6">
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-            <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:flex-1 lg:flex-wrap">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-end">
+            <div className="flex flex-col gap-3 lg:flex-row lg:items-center justify-end">
               <SearchInput
                 value={search}
                 onChange={handleSearch}
                 placeholder="Search here"
                 className="w-full lg:flex-1 lg:max-w-md xl:max-w-xl"
-                inputClassName="h-11 rounded-full border-slate-200 bg-white"
+                inputClassName="h-11 rounded-full border-border bg-background"
               />
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:flex-1">
                 <Select value={datePreset} onValueChange={handleDatePreset}>
-                  <SelectTrigger className="h-11 w-full sm:w-44 rounded-full border-slate-200 bg-white">
+                  <SelectTrigger className="h-11 w-full rounded-full border-border bg-background sm:w-44">
                     <span className="text-xs font-semibold text-muted-foreground mr-1">Date</span>
                     <SelectValue placeholder="All dates" />
                   </SelectTrigger>
@@ -141,7 +129,7 @@ export default function MyPatientsListPage() {
                   </SelectContent>
                 </Select>
                 <Select value={statusFilter} onValueChange={handleStatusFilter}>
-                  <SelectTrigger className="h-11 w-full sm:w-44 rounded-full border-slate-200 bg-white">
+                  <SelectTrigger className="h-11 w-full rounded-full border-border bg-background sm:w-44">
                     <span className="text-xs font-semibold text-muted-foreground mr-1">Status</span>
                     <SelectValue placeholder="All status" />
                   </SelectTrigger>

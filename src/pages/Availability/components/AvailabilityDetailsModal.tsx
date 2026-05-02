@@ -24,16 +24,16 @@ const statusLabel: Record<AvailabilityStatus, string> = {
 }
 
 const statusStyle: Record<AvailabilityStatus, string> = {
-  pending: 'bg-slate-400 text-white',
+  pending: 'bg-muted-foreground/75 text-white',
   approved: 'bg-emerald-600 text-white',
   rejected: 'bg-red-500 text-white',
 }
 
 function DetailRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-4 py-2 border-b border-slate-100 last:border-0">
-      <span className="text-sm font-medium text-muted-foreground shrink-0 sm:w-44">{label}</span>
-      <span className="text-sm text-slate-900 break-words">{value}</span>
+    <div className="flex flex-col gap-1 border-b border-border py-2 last:border-0 sm:flex-row sm:items-baseline sm:gap-4">
+      <span className="shrink-0 text-sm font-medium text-muted-foreground sm:w-44">{label}</span>
+      <span className="break-words text-sm text-foreground">{value}</span>
     </div>
   )
 }

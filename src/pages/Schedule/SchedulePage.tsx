@@ -48,11 +48,13 @@ export default function SchedulePage() {
     >
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#E8EDF5] text-[#1A284B]">
+          <div
+            className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/12 text-primary shadow-sm ring-1 ring-primary/15 dark:bg-primary/20 dark:text-primary dark:ring-primary/25"
+          >
             <CalendarRange className="h-5 w-5" />
           </div>
           <div>
-            <h1 className="text-xl font-semibold text-slate-900 tracking-tight">Schedule</h1>
+            <h1 className="text-xl font-semibold tracking-tight text-foreground">Schedule</h1>
             <p className="text-sm text-muted-foreground">
               Duty roster by day, hours, and date range.
             </p>

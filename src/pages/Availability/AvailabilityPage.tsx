@@ -181,11 +181,13 @@ export default function AvailabilityPage() {
     >
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#E8EDF5] text-[#1A284B]">
+          <div
+            className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/12 text-primary shadow-sm ring-1 ring-primary/15 dark:bg-primary/20 dark:text-primary dark:ring-primary/25"
+          >
             <CalendarOff className="h-5 w-5" />
           </div>
           <div>
-            <h1 className="text-xl font-semibold text-slate-900 tracking-tight">Availability</h1>
+            <h1 className="text-xl font-semibold tracking-tight text-foreground">Availability</h1>
             <p className="text-sm text-muted-foreground">
               Manage time off and unavailability blocks.
             </p>
@@ -193,20 +195,20 @@ export default function AvailabilityPage() {
         </div>
       </div>
 
-      <Card className="bg-white border border-slate-100 shadow-sm overflow-hidden">
+      <Card className="overflow-hidden  bg-card text-accent shadow-sm">
         <CardContent className="p-5 sm:p-6">
-          <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
-            <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:flex-1 lg:flex-wrap">
+          <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-end">
+            <div className="flex flex-col gap-3 lg:flex-row lg:items-center justify-end">
               <SearchInput
                 value={search}
                 onChange={handleSearch}
                 placeholder="Search here"
                 className="w-full lg:flex-1 lg:max-w-md xl:max-w-xl"
-                inputClassName="h-11 rounded-full border-slate-200 bg-white"
+                inputClassName="h-11 rounded-full border-border bg-background"
               />
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:flex-1">
                 <Select value={datePreset} onValueChange={handleDatePreset}>
-                  <SelectTrigger className="h-11 w-full sm:w-44 rounded-full border-slate-200 bg-white">
+                  <SelectTrigger className="h-11 w-full rounded-full border-border bg-background sm:w-44">
                     <span className="text-xs font-semibold text-muted-foreground mr-1">Date</span>
                     <SelectValue placeholder="All dates" />
                   </SelectTrigger>
@@ -219,7 +221,7 @@ export default function AvailabilityPage() {
                   </SelectContent>
                 </Select>
                 <Select value={statusFilter} onValueChange={handleStatusFilter}>
-                  <SelectTrigger className="h-11 w-full sm:w-44 rounded-full border-slate-200 bg-white">
+                  <SelectTrigger className="h-11 w-full rounded-full border-border bg-background sm:w-44">
                     <span className="text-xs font-semibold text-muted-foreground mr-1">Status</span>
                     <SelectValue placeholder="All status" />
                   </SelectTrigger>
@@ -236,7 +238,7 @@ export default function AvailabilityPage() {
             <Button
               type="button"
               onClick={openAdd}
-              className="h-11 shrink-0 rounded-full bg-[#1A284B] px-5 text-white hover:bg-[#1A284B]/90"
+              className="h-11 shrink-0 rounded-full bg-secondary px-5 text-white hover:bg-secondary/90 dark:text-white"
             >
               <Plus className="h-4 w-4 mr-2" />
               Add Availability

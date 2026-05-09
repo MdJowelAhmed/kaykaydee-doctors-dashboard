@@ -45,30 +45,34 @@ export function AppointmentsTable({
   onStatusChange,
   onInfo,
 }: AppointmentsTableProps) {
+  const headerBg = 'bg-[#E9EBF0] dark:bg-background'
+  const headerCell = 'border-x-0 border-t-0 px-4 text-sm font-semibold text-accent sm:px-6 sm:py-4 align-middle'
+  const bodyCell = 'border-b border-border px-4 py-3 text-sm text-accent sm:px-6 sm:py-4'
+
   return (
-    <div className="w-full overflow-auto rounded-2xl border  bg-card shadow-sm">
+    <div className="w-full overflow-auto rounded-2xl   bg-card ">
       <table className="w-full min-w-[1100px]">
         <thead>
-          <tr className="bg-primary text-accent-foreground">
-            <th className="px-5 py-3.5 text-left text-sm font-semibold first:rounded-tl-2xl">
+          <tr className="">
+            <th className={cn(headerCell, headerBg, 'text-left rounded-l-full')}>
               S. No
             </th>
-            <th className="px-5 py-3.5 text-left text-sm font-semibold">User ID</th>
-            <th className="px-5 py-3.5 text-left text-sm font-semibold">Patient Name</th>
-            <th className="px-5 py-3.5 text-left text-sm font-semibold">Contact No</th>
-            <th className="px-5 py-3.5 text-left text-sm font-semibold">Service</th>
-            <th className="px-5 py-3.5 text-left text-sm font-semibold">Appoint Date</th>
-            <th className="px-5 py-3.5 text-left text-sm font-semibold">Room No</th>
-            <th className="px-5 py-3.5 text-left text-sm font-semibold">Status</th>
-            <th className="px-5 py-3.5 text-center text-sm font-semibold last:rounded-tr-2xl w-[100px]">
+            <th className={cn(headerCell, headerBg, 'text-left')}>User ID</th>
+            <th className={cn(headerCell, headerBg, 'text-left')}>Patient Name</th>
+            <th className={cn(headerCell, headerBg, 'text-left')}>Contact No</th>
+            <th className={cn(headerCell, headerBg, 'text-left')}>Service</th>
+            <th className={cn(headerCell, headerBg, 'text-left')}>Appoint Date</th>
+            <th className={cn(headerCell, headerBg, 'text-left')}>Room No</th>
+            <th className={cn(headerCell, headerBg, 'text-left')}>Status</th>
+            <th className={cn(headerCell, headerBg, 'text-right rounded-r-full')}>
               Action
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-border">
+        <tbody className="bg-card text-accent-foreground">
           {appointments.length === 0 ? (
             <tr>
-              <td colSpan={9} className="px-5 py-12 text-center text-sm text-muted-foreground">
+              <td colSpan={9} className="px-5 py-12 text-center text-sm text-accent-foreground">
                 No appointments found
               </td>
             </tr>
@@ -81,30 +85,30 @@ export function AppointmentsTable({
                 transition={{ delay: 0.02 * index }}
                 className="transition-colors hover:bg-muted/45"
               >
-                <td className="px-5 py-3.5">
+                <td className={bodyCell}>
                   <span className="text-sm font-medium text-muted-foreground">#{row.serialNo}</span>
                 </td>
-                <td className="px-5 py-3.5">
+                <td className={bodyCell}>
                   <span className="text-sm tabular-nums text-foreground">{row.userId}</span>
                 </td>
-                <td className="px-5 py-3.5">
+                <td className={bodyCell}>
                   <span className="text-sm text-foreground">{row.patientName}</span>
                 </td>
-                <td className="px-5 py-3.5">
+                <td className={bodyCell}>
                   <span className="text-sm text-muted-foreground">{row.contactNo}</span>
                 </td>
-                <td className="px-5 py-3.5">
+                <td className={bodyCell}>
                   <span className="text-sm text-foreground">{row.service}</span>
                 </td>
-                <td className="px-5 py-3.5">
+                <td className={bodyCell}>
                   <span className="text-sm text-muted-foreground">
                     {formatDate(row.appointmentDate, 'd MMM yyyy')}
                   </span>
                 </td>
-                <td className="px-5 py-3.5">
+                <td className={bodyCell}>
                   <span className="text-sm text-muted-foreground lowercase">{row.roomNo}</span>
                 </td>
-                <td className="px-5 py-3.5">
+                <td className={bodyCell}>
                   <Select
                     value={row.status}
                     onValueChange={(v) => onStatusChange(row.id, v as DoctorAppointmentStatus)}
@@ -126,7 +130,7 @@ export function AppointmentsTable({
                     </SelectContent>
                   </Select>
                 </td>
-                <td className="px-5 py-3.5">
+                <td className={bodyCell}>
                   <div className="flex justify-center">
                     <Button
                       type="button"

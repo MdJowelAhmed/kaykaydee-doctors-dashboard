@@ -92,6 +92,8 @@ export default function MyAppointmentsPage() {
     setDetailOpen(true)
   }
 
+  const filterInputClass =  'h-11 rounded-xl border-border bg-white dark:bg-background text-accent shadow-sm placeholder:text-accent'
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -100,7 +102,11 @@ export default function MyAppointmentsPage() {
       className="flex flex-col gap-6"
     >
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex items-center gap-3">
+        
+      </div>
+
+      <div className="overflow-hidden flex items-center justify-between gap-4 ">
+      <div className="flex items-center gap-3">
           <div
             className="flex h-11 w-11 items-center justify-center rounded-xl bg-card text-accent shadow-sm ring-1 ring-emerald-500/20 dark:bg-emerald-500/20 dark:text-emerald-300 dark:ring-emerald-400/25"
           >
@@ -113,20 +119,17 @@ export default function MyAppointmentsPage() {
             </p>
           </div>
         </div>
-      </div>
-
-      <Card className="overflow-hidden  bg-card text-accent shadow-sm">
-        <CardContent className="p-5 sm:p-6">
+        <div className="">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <SearchInput
               value={search}
               onChange={handleSearch}
               placeholder="Search here"
               className="w-full lg:flex-1 lg:max-w-xl"
-              inputClassName="h-11 rounded-full bg-background"
+              inputClassName={filterInputClass}
             />
             <Select value={datePreset} onValueChange={handleDatePreset}>
-              <SelectTrigger className="h-11 w-full gap-2 rounded-full bg-background lg:w-48">
+              <SelectTrigger className={`h-11 w-full shrink-0 sm:w-[160px] ${filterInputClass}`}>
                 <span className="text-xs font-semibold text-muted-foreground shrink-0"></span>
                 <SelectValue placeholder="All dates" />
               </SelectTrigger>
@@ -139,14 +142,16 @@ export default function MyAppointmentsPage() {
               </SelectContent>
             </Select>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
-      <AppointmentsTable
+   <div className='p-4 bg-card rounded-3xl'>
+   <AppointmentsTable
         appointments={paginatedData}
         onStatusChange={handleStatusChange}
         onInfo={handleInfo}
       />
+   </div>
 
       <Pagination
         currentPage={Math.min(pagination.page, totalPages)}

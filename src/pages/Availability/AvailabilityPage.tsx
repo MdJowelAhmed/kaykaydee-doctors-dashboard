@@ -1,8 +1,7 @@
 import { useMemo, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { CalendarOff, Plus } from 'lucide-react'
+import {  Plus } from 'lucide-react'
 import { toast } from 'sonner'
-import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import {
   Select,
@@ -172,6 +171,8 @@ export default function AvailabilityPage() {
     }
   }
 
+  const filterInputClass =  'h-11 rounded-xl border-border bg-white dark:bg-background text-accent shadow-sm placeholder:text-accent'
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -181,22 +182,20 @@ export default function AvailabilityPage() {
     >
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
-          <div
-            className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/12 text-primary shadow-sm ring-1 ring-primary/15 dark:bg-primary/20 dark:text-primary dark:ring-primary/25"
-          >
-            <CalendarOff className="h-5 w-5" />
-          </div>
+       
+          
+        </div>
+      </div>
+
+      <div className="overflow-hidden  flex items-center justify-between gap-4 ">
+      
           <div>
             <h1 className="text-xl font-semibold tracking-tight text-foreground">Availability</h1>
             <p className="text-sm text-muted-foreground">
               Manage time off and unavailability blocks.
             </p>
           </div>
-        </div>
-      </div>
-
-      <Card className="overflow-hidden  bg-card text-accent shadow-sm">
-        <CardContent className="p-5 sm:p-6">
+        <div className="">
           <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-end">
             <div className="flex flex-col gap-3 lg:flex-row lg:items-center justify-end">
               <SearchInput
@@ -204,11 +203,11 @@ export default function AvailabilityPage() {
                 onChange={handleSearch}
                 placeholder="Search here"
                 className="w-full lg:flex-1 lg:max-w-md xl:max-w-xl"
-                inputClassName="h-11 rounded-full border-border bg-background"
+                inputClassName={filterInputClass}
               />
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:flex-1">
                 <Select value={datePreset} onValueChange={handleDatePreset}>
-                  <SelectTrigger className="h-11 w-full rounded-full border-border bg-background sm:w-44">
+                  <SelectTrigger className={`h-11 w-full shrink-0 sm:w-[160px] ${filterInputClass}`}>
                     <span className="text-xs font-semibold text-muted-foreground mr-1">Date</span>
                     <SelectValue placeholder="All dates" />
                   </SelectTrigger>
@@ -221,7 +220,7 @@ export default function AvailabilityPage() {
                   </SelectContent>
                 </Select>
                 <Select value={statusFilter} onValueChange={handleStatusFilter}>
-                  <SelectTrigger className="h-11 w-full rounded-full border-border bg-background sm:w-44">
+                  <SelectTrigger className={`h-11 w-full shrink-0 sm:w-[160px] ${filterInputClass}`}>
                     <span className="text-xs font-semibold text-muted-foreground mr-1">Status</span>
                     <SelectValue placeholder="All status" />
                   </SelectTrigger>
@@ -238,15 +237,16 @@ export default function AvailabilityPage() {
             <Button
               type="button"
               onClick={openAdd}
-              className="h-11 shrink-0 rounded-full bg-secondary px-5 text-white hover:bg-secondary/90 dark:text-white"
+              className="h-11 shrink-0  bg-secondary px-5 text-white hover:bg-secondary/90 dark:text-white"
             >
               <Plus className="h-4 w-4 mr-2" />
               Add Availability
             </Button>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
+      <div className='p-4 bg-card rounded-3xl'>
       <AvailabilityTable
         rows={paginatedData}
         onInfo={(row) => {
@@ -256,6 +256,7 @@ export default function AvailabilityPage() {
         onEdit={openEdit}
         onDelete={openDelete}
       />
+      </div>
 
       <Pagination
         currentPage={Math.min(pagination.page, totalPages)}

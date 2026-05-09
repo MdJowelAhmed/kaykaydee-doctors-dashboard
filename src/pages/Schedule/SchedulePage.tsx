@@ -1,6 +1,5 @@
 import { useMemo, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { CalendarRange } from 'lucide-react'
 import { Pagination } from '@/components/common/Pagination'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { setPage, setLimit } from '@/redux/slices/scheduleSlice'
@@ -48,11 +47,7 @@ export default function SchedulePage() {
     >
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
-          <div
-            className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/12 text-primary shadow-sm ring-1 ring-primary/15 dark:bg-primary/20 dark:text-primary dark:ring-primary/25"
-          >
-            <CalendarRange className="h-5 w-5" />
-          </div>
+
           <div>
             <h1 className="text-xl font-semibold tracking-tight text-foreground">Schedule</h1>
             <p className="text-sm text-muted-foreground">
@@ -62,13 +57,15 @@ export default function SchedulePage() {
         </div>
       </div>
 
-      <ScheduleTable
-        rows={paginatedData}
-        onInfo={(row) => {
-          setDetailRow(row)
-          setDetailOpen(true)
-        }}
-      />
+      <div className='p-4 bg-card rounded-3xl'>
+        <ScheduleTable
+          rows={paginatedData}
+          onInfo={(row) => {
+            setDetailRow(row)
+            setDetailOpen(true)
+          }}
+        />
+      </div>
 
       <Pagination
         currentPage={Math.min(pagination.page, totalPages)}

@@ -2,7 +2,6 @@ import { useMemo, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { CalendarCheck } from 'lucide-react'
 import { toast } from 'sonner'
-import { Card, CardContent } from '@/components/ui/card'
 import {
   Select,
   SelectContent,

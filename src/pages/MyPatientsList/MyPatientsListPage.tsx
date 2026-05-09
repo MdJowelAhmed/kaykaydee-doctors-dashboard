@@ -1,6 +1,5 @@
 import { useMemo, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Card, CardContent } from '@/components/ui/card'
 import {
   Select,
   SelectContent,
@@ -92,6 +91,7 @@ export default function MyPatientsListPage() {
   const handlePageChange = (newPage: number) => {
     setParam('page', newPage)
   }
+  const filterInputClass =  'h-11 rounded-xl border-border bg-white dark:bg-background text-accent shadow-sm placeholder:text-accent'
 
   return (
     <motion.div
@@ -102,8 +102,8 @@ export default function MyPatientsListPage() {
     >
 
 
-      <Card className="overflow-hidden bg-card text-accent shadow-sm">
-        <CardContent className="p-5 sm:p-6">
+      <div className="overflow-hidden ">
+        <div className="">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-end">
             <div className="flex flex-col gap-3 lg:flex-row lg:items-center justify-end">
               <SearchInput
@@ -111,11 +111,11 @@ export default function MyPatientsListPage() {
                 onChange={handleSearch}
                 placeholder="Search here"
                 className="w-full lg:flex-1 lg:max-w-md xl:max-w-xl"
-                inputClassName="h-11 rounded-full border-border bg-background"
+                inputClassName={filterInputClass}
               />
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:flex-1">
                 <Select value={datePreset} onValueChange={handleDatePreset}>
-                  <SelectTrigger className="h-11 w-full rounded-full border-border bg-background sm:w-44">
+                  <SelectTrigger className={`h-11 w-full shrink-0 sm:w-[160px] ${filterInputClass}`}>
                     <span className="text-xs font-semibold text-muted-foreground mr-1">Date</span>
                     <SelectValue placeholder="All dates" />
                   </SelectTrigger>
@@ -128,7 +128,7 @@ export default function MyPatientsListPage() {
                   </SelectContent>
                 </Select>
                 <Select value={statusFilter} onValueChange={handleStatusFilter}>
-                  <SelectTrigger className="h-11 w-full rounded-full border-border bg-background sm:w-44">
+                  <SelectTrigger className={`h-11 w-full shrink-0 sm:w-[160px] ${filterInputClass}`}>
                     <span className="text-xs font-semibold text-muted-foreground mr-1">Status</span>
                     <SelectValue placeholder="All status" />
                   </SelectTrigger>
@@ -143,16 +143,18 @@ export default function MyPatientsListPage() {
               </div>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
-      <PatientsListTable
+ <div className='p-4 bg-card rounded-3xl'>
+ <PatientsListTable
         rows={paginatedData}
         onInfo={(row) => {
           setDetailRow(row)
           setDetailOpen(true)
         }}
       />
+ </div>
 
       <Pagination
         currentPage={Math.min(pagination.page, totalPages)}

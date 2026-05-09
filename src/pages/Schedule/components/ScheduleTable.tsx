@@ -20,27 +20,30 @@ interface ScheduleTableProps {
   onInfo: (row: ScheduleRecord) => void
 }
 
+const headerBg = 'bg-[#E9EBF0] dark:bg-background'
+const headerCell = 'border-x-0 border-t-0 px-4 text-sm font-semibold text-accent sm:px-6 sm:py-4 align-middle'
+const bodyCell = 'border-b border-border px-4 py-3 text-sm text-accent sm:px-6 sm:py-4'
 export function ScheduleTable({ rows, onInfo }: ScheduleTableProps) {
   return (
-    <div className="w-full overflow-auto rounded-2xl border border-border bg-card shadow-sm">
+    <div className="w-full overflow-auto rounded-2xl   bg-card ">
       <table className="w-full min-w-[800px]">
         <thead>
-          <tr className="bg-primary text-accent-foreground">
-            <th className="px-5 py-3.5 text-left text-sm font-semibold first:rounded-tl-2xl">
+          <tr className="">
+            <th className={cn(headerCell, headerBg, 'text-left rounded-l-full')}>
               S. No
             </th>
-            <th className="px-5 py-3.5 text-left text-sm font-semibold">Apply Date</th>
-            <th className="px-5 py-3.5 text-left text-sm font-semibold">Duty Time</th>
-            <th className="px-5 py-3.5 text-left text-sm font-semibold">Duration</th>
-            <th className="px-5 py-3.5 text-right text-sm font-semibold last:rounded-tr-2xl w-[100px]">
+            <th className={cn(headerCell, headerBg, 'text-left')}>Apply Date</th>
+            <th className={cn(headerCell, headerBg, 'text-left')}>Duty Time</th>
+            <th className={cn(headerCell, headerBg, 'text-left')}>Duration</th>
+            <th className={cn(headerCell, headerBg, 'text-right rounded-r-full')}>
               Action
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-border">
+        <tbody className="bg-card text-accent-foreground">
           {rows.length === 0 ? (
             <tr>
-              <td colSpan={5} className="px-5 py-12 text-center text-sm text-muted-foreground">
+              <td colSpan={5} className="px-5 py-12 text-center text-sm text-accent-foreground">
                 No schedule rows
               </td>
             </tr>
@@ -55,13 +58,13 @@ export function ScheduleTable({ rows, onInfo }: ScheduleTableProps) {
                   transition={{ delay: 0.02 * index }}
                   className="transition-colors hover:bg-muted/45"
                 >
-                  <td className="px-5 py-3.5">
+                  <td className={bodyCell}>
                     <span className="text-sm font-medium text-muted-foreground">#{row.serialNo}</span>
                   </td>
-                  <td className="px-5 py-3.5">
+                  <td className={bodyCell}>
                     <span className="text-sm text-foreground">{row.applyDay}</span>
                   </td>
-                  <td className="px-5 py-3.5">
+                      <td className={bodyCell}>
                     {isOff ? (
                       <span className="text-sm font-medium text-destructive dark:text-red-400">
                         Off Day
@@ -72,7 +75,7 @@ export function ScheduleTable({ rows, onInfo }: ScheduleTableProps) {
                       </span>
                     )}
                   </td>
-                  <td className="px-5 py-3.5">
+                  <td className={bodyCell}>
                     <span
                       className={cn(
                         'text-sm',
@@ -82,7 +85,7 @@ export function ScheduleTable({ rows, onInfo }: ScheduleTableProps) {
                       {formatDuration(row)}
                     </span>
                   </td>
-                  <td className="px-5 py-3.5">
+                  <td className={bodyCell}>
                     <div className="flex justify-end">
                       <Button
                         type="button"

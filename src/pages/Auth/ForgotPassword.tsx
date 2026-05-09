@@ -58,7 +58,7 @@ export default function ForgotPassword() {
     <div className="space-y-6">
       {/* Mobile Logo */}
       <div className=" flex flex-col items-center justify-center gap-3 mb-8">
-        <img src="/assets/logo.png" alt="logo" className="w-20 h-20" />
+        <img src="/assets/logo.png" alt="logo" className="h-12 w-20" />
         <img src="/assets/logo3.png" alt="logo" className="w-20 h-8" />
       </div>
 
@@ -95,7 +95,7 @@ export default function ForgotPassword() {
                     id="email"
                     type="email"
                     placeholder="Enter your email"
-                    className={cn('pl-10', errors.email && 'border-destructive')}
+                    className={cn('pl-10 bg-white dark:bg-background', errors.email && 'border-destructive')}
                     {...register('email')}
                   />
                 </div>
@@ -104,10 +104,10 @@ export default function ForgotPassword() {
                 )}
               </div>
 
-              <Button type="submit" className="w-full" size="lg" isLoading={isLoading}>
+              <Button type="submit" className="w-full bg-gradient-to-r from-[#7946CD] to-[#BC45E4] text-white hover:from-[#BC45E4] hover:to-[#7946CD]" size="lg" isLoading={isLoading}>
                 {!isLoading && (
                   <>
-                    Send Reset Link
+                    Submit
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </>
                 )}
@@ -133,7 +133,7 @@ export default function ForgotPassword() {
               <p className="font-medium">{submittedEmail}</p>
             </div>
 
-            <Button onClick={handleContinue} className="w-full" size="lg">
+            <Button onClick={handleContinue} className="w-full bg-gradient-to-r from-[#7946CD] to-[#BC45E4] text-white hover:from-[#BC45E4] hover:to-[#7946CD]" size="lg">
               Enter Code
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>

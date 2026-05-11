@@ -18,7 +18,7 @@ export default function DashboardLayout() {
       <div
         className={cn(
           'min-w-0 transition-[margin] duration-300 ease-out',
-          sidebarCollapsed ? 'lg:ml-[calc(1.25rem+80px)]' : 'lg:ml-[calc(1.25rem+280px)]'
+          sidebarCollapsed ? 'lg:ml-[calc(1.25rem+80px)]' : 'lg:ml-[calc(1.25rem+230px)]'
         )}
         style={{ paddingTop: shellTop }}
       >

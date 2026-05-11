@@ -3,11 +3,12 @@ import { Sun, Moon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import {  toggleTheme, } from '@/redux/slices/uiSlice'
+import { toggleTheme, } from '@/redux/slices/uiSlice'
 import { logout } from '@/redux/slices/authSlice'
 import { NotificationPreviewDialog } from '@/components/layout/NotificationPreviewDialog'
 import { useState } from 'react'
 import { ConfirmDialog } from '@/components/common/ConfirmDialog'
+import { cn } from '@/utils/cn'
 // const routeTitles: Record<string, string> = {
 //   '/dashboard': 'Dashboard',
 //   '/my-appointments': 'My Appointments',
@@ -69,41 +70,60 @@ export function Header() {
   }
 
   return (
-   <div className='bg-background  p-2 fixed top-0 left-0 right-0 h-28'>
-     <header
-      className="fixed left-0 right-0 top-0 z-[100] mx-5 mt-4 h-20 rounded-2xl bg-card shadow-md backdrop-blur supports-[backdrop-filter]:bg-background/60"
-    >
-      <div className="mx-auto flex h-full w-full max-w-[1920px] items-center justify-between gap-3 px-4 sm:px-5 lg:px-6">
-      <div className="text-primary text-white font-bold text-lg">
-            <img src="/logo.png" alt="Booking Dashboard" className="h-16 w-28" />
+    <div className='bg-background  p-2 fixed top-0 left-0 right-0 h-[72px]'>
+      <header
+        className="fixed left-0 right-0 top-0 z-[100] mx-5 mt-4 h-[72px] rounded-2xl bg-card shadow-md backdrop-blur supports-[backdrop-filter]:bg-background/60"
+      >
+        <div className="mx-auto flex h-full w-full max-w-[1920px] items-center justify-between gap-3 px-4 sm:px-5 lg:px-6">
+          <div className="text-primary text-white font-bold text-lg">
+            <img src="/assets/logo2.png" alt="Booking Dashboard" className="h-7 w-40" />
             {/* <img src="/assets/logo3.png" alt="Booking Dashboard" className="h-8 w-20 object-contain" /> */}
           </div>
 
-        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={() => dispatch(toggleTheme())}
-                className="h-10 w-10 "
-                aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-              >
-                {theme === 'dark' ? (
-                  <Sun className="h-[1.15rem] w-[1.15rem] text-amber-500" strokeWidth={2} />
-                ) : (
-                  <Moon className="h-[1.15rem] w-[1.15rem] text-primary" strokeWidth={2} />
-                )}
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent side="bottom" className="text-xs">
-              {theme === 'dark' ? 'Light mode' : 'Dark mode'}
-            </TooltipContent>
-          </Tooltip>
+          <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  onClick={() => dispatch(toggleTheme())}
+                  className={cn(
+                    'relative h-8 w-[72px] rounded-full p-1 transition-colors border ',
+                    theme === 'dark' ? 'bg-[#414141]' : 'bg-[#414141]'
+                  )}
+                  aria-label="Toggle theme"
+                  aria-pressed={theme === 'dark'}
+                >
+                  <span
+                    className={cn(
+                      'absolute  h-8 w-8 rounded-3xl bg-white shadow-sm transition-all duration-200',
+                      theme === 'dark' ? 'left-[38px]' : 'left-0'
+                    )}
+                  />
+                  <span className="relative z-10 flex w-full items-center justify-between px-1">
+                    <Sun
+                      className={cn(
+                        'h-5 w-5 transition-colors',
+                        theme === 'light' ? 'text-[#111827]' : 'text-[#8f949b]'
+                      )}
+                    />
+                    <Moon
+                      className={cn(
+                        'h-5 w-5 transition-colors',
+                        theme === 'dark' ? 'text-[#1f3f69]' : 'text-[#d0d4db]'
+                      )}
+                    />
+                  </span>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side="bottom" className="text-xs">
+                {theme === 'dark' ? 'Light mode' : 'Dark mode'}
+              </TooltipContent>
+            </Tooltip>
 
-          <NotificationPreviewDialog />
+            <NotificationPreviewDialog />
 
-          {/* <DropdownMenu>
+            {/* <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
                 variant="outline"
@@ -162,21 +182,21 @@ export function Header() {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu> */}
+          </div>
         </div>
-      </div>
-      <ConfirmDialog
-        open={logoutDialogOpen}
-        onClose={() => setLogoutDialogOpen(false)}
-        onConfirm={handleLogout}
-        onSuccess={() => setLogoutDialogOpen(false)}
-        title="Confirm logout"
-        description="Are you sure you want to log out?"
-        confirmText="Logout"
-        cancelText="Cancel"
-        variant="danger"
-        isLoading={isLoggingOut}
-      />
-    </header>
-   </div>
+        <ConfirmDialog
+          open={logoutDialogOpen}
+          onClose={() => setLogoutDialogOpen(false)}
+          onConfirm={handleLogout}
+          onSuccess={() => setLogoutDialogOpen(false)}
+          title="Confirm logout"
+          description="Are you sure you want to log out?"
+          confirmText="Logout"
+          cancelText="Cancel"
+          variant="danger"
+          isLoading={isLoggingOut}
+        />
+      </header>
+    </div>
   )
 }

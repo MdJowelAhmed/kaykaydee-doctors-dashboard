@@ -14,7 +14,6 @@ import {
   CalendarRange,
   Calendar,
   Brain,
-  Crown,
 } from 'lucide-react'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
@@ -33,12 +32,10 @@ import {
 } from '@/components/layout/dashboardLayoutTokens'
 import { getRoleDisplayName } from '@/utils/roleHelpers'
 
-const COL_AI_FROM = '#6737BE'
-const COL_AI_TO = '#E055FA'
-const COL_CARD_FROM = '#44A9C4'
-const COL_CARD_MID = '#48DAC9'
-const COL_CARD_TO = '#E055FA'
-const COL_PROGRESS_FILL = '#48DAC9'
+// const COL_CARD_FROM = '#44A9C4'
+// const COL_CARD_MID = '#48DAC9'
+// const COL_CARD_TO = '#E055FA'
+// const COL_PROGRESS_FILL = '#48DAC9'
 
 interface NavItem {
   title: string
@@ -169,18 +166,6 @@ export function Sidebar() {
 
   return (
     <>
-      <svg
-        aria-hidden
-        className="pointer-events-none absolute h-0 w-0 overflow-hidden"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <defs>
-          <linearGradient id="sidebar-ai-nav-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor={COL_AI_FROM} />
-            <stop offset="100%" stopColor={COL_AI_TO} />
-          </linearGradient>
-        </defs>
-      </svg>
       <div
         className={cn(
           'fixed inset-x-0 bottom-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden transition-opacity',
@@ -392,9 +377,13 @@ function SidebarNavItem({ item, collapsed, variant = 'default' }: SidebarNavItem
             className={cn(
               'h-[1.125rem] w-[1.125rem] shrink-0 stroke-[1.75]',
               variant === 'default' &&
-                (isActive ? 'text-accent' : 'text-muted-foreground')
+                (isActive ? 'text-accent' : 'text-muted-foreground'),
+              variant === 'ai' &&
+                (isActive
+                  ? 'text-[#E055FA]'
+                  : 'text-[#6737BE] dark:text-[#b794f6]')
             )}
-            stroke={variant === 'ai' ? 'url(#sidebar-ai-nav-gradient)' : undefined}
+            aria-hidden
           />
           {!collapsed &&
             (variant === 'ai' ? (

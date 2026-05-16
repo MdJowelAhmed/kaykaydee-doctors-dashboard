@@ -210,15 +210,16 @@ export function Sidebar() {
           {showAi &&
             (filteredMain.length > 0 || filteredSettings.length > 0) && <SidebarDivider />}
 
-          {showAi &&
-            filteredAi.map((item) => (
-              <SidebarNavItem
-                key={item.href}
-                item={item}
-                collapsed={sidebarCollapsed}
-                variant="ai"
-              />
-            ))}
+          {showAi
+            ? filteredAi.map((item) => (
+                <SidebarNavItem
+                  key={item.href}
+                  item={item}
+                  collapsed={sidebarCollapsed}
+                  variant="ai"
+                />
+              ))
+            : null}
 
           {/* {!sidebarCollapsed && (
             <div className="mt-3 px-1">

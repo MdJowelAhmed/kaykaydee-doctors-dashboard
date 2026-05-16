@@ -14,6 +14,7 @@ import {
   CalendarRange,
   Calendar,
   Brain,
+  LayoutDashboard,
 } from 'lucide-react'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
@@ -45,6 +46,12 @@ interface NavItem {
 }
 
 const mainNavItems: NavItem[] = [
+  {
+    title: 'Dashboard Overview',
+    href: '/dashboard-overview',
+    icon: LayoutDashboard,
+    allowedRoles: [UserRole.DOCTOR, UserRole.STAFF],
+  },
   {
     title: 'My Appointments',
     href: '/my-appointments',

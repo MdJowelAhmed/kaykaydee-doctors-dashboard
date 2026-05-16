@@ -35,6 +35,7 @@ import SubscriptionManagePage from './pages/SubscriptionManage/SubscriptionManag
 import AdminManagePage from './pages/AdminManage/AdminManagePage'
 import ZealthAIPage from './pages/ZealthAI/ZealthAIPage'
 import MyAppointmentsPage from './pages/MyAppointments/MyAppointmentsPage'
+import DoctorDashboardPage from './pages/DoctorDashboard/DoctorDashboardPage'
 import AvailabilityPage from './pages/Availability/AvailabilityPage'
 import MyPatientsListPage from './pages/MyPatientsList/MyPatientsListPage'
 import ClientProfilePage from './pages/ClientProfile/ClientProfilePage'
@@ -88,7 +89,16 @@ function App() {
           }
         >
           <Route index element={<RoleBasedRedirect />} />
-          
+
+          <Route
+            path="dashboard-overview"
+            element={
+              <RoleBasedRoute allowedRoles={[...DASHBOARD_ALLOWED_ROLES]}>
+                <DoctorDashboardPage />
+              </RoleBasedRoute>
+            }
+          />
+
           {/* Dashboard — disabled (Doctor/Staff land on My Appointments) */}
           <Route
             path="dashboard"

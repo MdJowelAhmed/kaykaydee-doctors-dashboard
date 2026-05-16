@@ -60,6 +60,7 @@ export const ROUTE_PERMISSIONS: Record<string, UserRole[]> = {
   // '/booking-management': ALL_DASHBOARD_ROLES,
   // '/my-listing': ALL_DASHBOARD_ROLES,
   
+  '/dashboard-overview': [UserRole.DOCTOR, UserRole.STAFF],
   '/my-appointments': [UserRole.DOCTOR,UserRole.STAFF],
   '/calender': [UserRole.DOCTOR, ],
   '/notification': [UserRole.DOCTOR,UserRole.STAFF],

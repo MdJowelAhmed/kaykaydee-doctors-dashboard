@@ -1,4 +1,5 @@
-import { useMemo, useEffect, useState } from 'react'
+import { useMemo, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import {
   Select,
@@ -12,13 +13,8 @@ import { Pagination } from '@/components/common/Pagination'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { setFilters, setPage, setLimit } from '@/redux/slices/myPatientsListSlice'
 import { useUrlParams } from '@/hooks/useUrlState'
-import type {
-  MyPatientListRecord,
-  MyAppointmentsDatePreset,
-  PatientListVisitStatus,
-} from '@/types'
+import type { MyAppointmentsDatePreset, PatientListVisitStatus } from '@/types'
 import { PatientsListTable } from './components/PatientsListTable'
-import { PatientListDetailsModal } from './components/PatientListDetailsModal'
 
 const DATE_PRESET_OPTIONS: { value: MyAppointmentsDatePreset; label: string }[] = [
   { value: 'all', label: 'All dates' },
@@ -34,6 +30,7 @@ const STATUS_FILTER_OPTIONS: { value: PatientListVisitStatus | 'all'; label: str
 ]
 
 export default function MyPatientsListPage() {
+  const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const { filteredList, pagination } = useAppSelector((state) => state.myPatientsList)
   const { getParam, getNumberParam, setParam, setParams } = useUrlParams()
@@ -43,9 +40,6 @@ export default function MyPatientsListPage() {
   const statusFilter = (getParam('status', 'all') || 'all') as PatientListVisitStatus | 'all'
   const page = getNumberParam('page', 1)
   const limit = getNumberParam('limit', 15)
-
-  const [detailRow, setDetailRow] = useState<MyPatientListRecord | null>(null)
-  const [detailOpen, setDetailOpen] = useState(false)
 
   useEffect(() => {
     dispatch(
@@ -149,10 +143,7 @@ export default function MyPatientsListPage() {
  <div className='p-4 bg-card rounded-3xl'>
  <PatientsListTable
         rows={paginatedData}
-        onInfo={(row) => {
-          setDetailRow(row)
-          setDetailOpen(true)
-        }}
+        onInfo={(row) => navigate(`/my-patients-list/${row.id}`)}
       />
  </div>
 
@@ -167,14 +158,6 @@ export default function MyPatientsListPage() {
         className="px-1"
       />
 
-      <PatientListDetailsModal
-        open={detailOpen}
-        onClose={() => {
-          setDetailOpen(false)
-          setDetailRow(null)
-        }}
-        record={detailRow}
-      />
     </motion.div>
   )
 }

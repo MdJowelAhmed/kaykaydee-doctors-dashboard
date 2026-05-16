@@ -103,6 +103,91 @@ export interface MyPatientsListFilters {
   status: PatientListVisitStatus | 'all'
 }
 
+export type ClientProfileTab =
+  | 'overview'
+  | 'sessions'
+  | 'notes'
+  | 'documents'
+  | 'report'
+  | 'exercises'
+  | 'invoice'
+  | 'outcome'
+
+export type ClientNoteCategory = 'SOAP' | 'AI' | 'Dictation' | 'Reports'
+
+export type ClientSessionStatus = 'pending' | 'confirmed'
+
+export interface ClientMedicalAlert {
+  id: string
+  label: string
+  detail: string
+  color: 'purple' | 'teal' | 'blue' | 'orange'
+}
+
+export interface ClientReferrer {
+  name: string
+  practice: string
+  phone: string
+  email: string
+  address: string
+}
+
+export interface ClientFundingDetails {
+  claim: string
+  provider: string
+  caseManager: string
+  employer: string
+}
+
+export interface ClientNote {
+  id: string
+  category: ClientNoteCategory
+  title: string
+  date: string
+  practitioner: string
+  body: string
+}
+
+export interface ClientSessionAppointment {
+  id: string
+  serialNo: string
+  userId: string
+  patientName: string
+  service: string
+  patientType: string
+  status: ClientSessionStatus
+}
+
+export interface ClientProfile {
+  id: string
+  patientId: string
+  name: string
+  email: string
+  phone: string
+  emergencyContact: string
+  patientType: string
+  funding: string
+  gender: string
+  occupation: string
+  age: number
+  dateOfBirth: string
+  address: string
+  sessionProgress: number
+  injuryTitle: string
+  injuryNotes: string[]
+  alerts: ClientMedicalAlert[]
+  referrer: ClientReferrer
+  fundingDetails: ClientFundingDetails
+  notes: ClientNote[]
+  sessions: ClientSessionAppointment[]
+  sessionStats: {
+    approved: number
+    attended: number
+    noShows: number
+    remaining: number
+  }
+}
+
 // ==================== Schedule (duty / weekly roster) ====================
 export interface ScheduleRecord {
   id: string

@@ -37,6 +37,8 @@ import ZealthAIPage from './pages/ZealthAI/ZealthAIPage'
 import MyAppointmentsPage from './pages/MyAppointments/MyAppointmentsPage'
 import AvailabilityPage from './pages/Availability/AvailabilityPage'
 import MyPatientsListPage from './pages/MyPatientsList/MyPatientsListPage'
+import ClientProfilePage from './pages/ClientProfile/ClientProfilePage'
+import ClientProfileEditPage from './pages/ClientProfile/ClientProfileEditPage'
 import SchedulePage from './pages/Schedule/SchedulePage'
 import Support from './pages/Support/Support'
 import FAQ from './pages/FAQ/FAQ'
@@ -205,6 +207,22 @@ function App() {
             element={
               <RoleBasedRoute allowedRoles={[...DASHBOARD_ALLOWED_ROLES]}>
                 <MyPatientsListPage />
+              </RoleBasedRoute>
+            }
+          />
+          <Route
+            path="my-patients-list/:id/edit"
+            element={
+              <RoleBasedRoute allowedRoles={[...DASHBOARD_ALLOWED_ROLES]}>
+                <ClientProfileEditPage />
+              </RoleBasedRoute>
+            }
+          />
+          <Route
+            path="my-patients-list/:id"
+            element={
+              <RoleBasedRoute allowedRoles={[...DASHBOARD_ALLOWED_ROLES]}>
+                <ClientProfilePage />
               </RoleBasedRoute>
             }
           />
